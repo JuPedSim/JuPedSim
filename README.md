@@ -11,4 +11,4 @@ model. It implements a couple of measurement methods including the [Voronoi-meth
 
 ## Download
 
-the official webpage of the project can be found [here](www.jupedsim.org).
+the official webpage of the project can be found [here](http://www.jupedsim.org).
