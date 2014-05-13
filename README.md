@@ -9,4 +9,6 @@ coupled and can be used independently at the moment. These are:
 model. It implements a couple of measurement methods including the [Voronoi-method](http://dx.doi.org/10.1016/j.physa.2009.12.015) for calculating the density.
 4. `JPSed`: a GUI for editing the geomery an the model parameters. Not yet implemented.
 
-## Requirements
+## Download
+
+the official webpage of the project can be found [here](www.jupedsim.org).
