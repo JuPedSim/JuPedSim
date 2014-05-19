@@ -1,8 +1,3 @@
-JuPedSim
-========
-
-Simulating pedestrians with state of the art models.
-
 ![image](./figures/logo.png)\
 
 Jülich Pedestrian Simulator\
