@@ -1,3 +1,24 @@
+-   JuPedSim
+-   JPScore
+    -   Project file (ini)
+        -   Header
+        -   Traffic constraints
+        -   Goal definitions (routing)
+        -   Agents
+        -   Operative models
+        -   Route choice models
+        -   Sample project file
+    -   Geometry
+    -   Trajectories
+-   JPSreport
+    -   Configuration
+    -   Initial files
+    -   Command line arguments
+-   JPSvis
+    -   End User Installation
+    -   Developers Installation
+-   JPSed
+
 ![image](./figures/logo.png)\
 
 Jülich Pedestrian Simulator\
@@ -144,7 +165,7 @@ The header comprises the following elements:
 This section defines constraints related to the traffic. At the moment
 doors can be open or close.
 
-``` {caption="Sample" traffic="" constraints="" section=""}
+~~~~ {caption="Sample" traffic="" constraints="" section=""}
 <traffic_constraints>
         <!-- doors states are: close or open -->
         <doors>
@@ -152,7 +173,7 @@ doors can be open or close.
             <door trans_id="6" caption="Rear-gate" state="close" />
         </doors>
     </traffic_constraints>
-```
+~~~~
 
 ##### trans\_id
 
@@ -174,7 +195,7 @@ not overlap with any walls or be in a rooms. The best practice is to
 position them near to exits. Goals are defined with close polygons, i.e
 the last vertex is equal to the first one.
 
-``` {caption="Sample" goals="" definition=""}
+~~~~ {caption="Sample" goals="" definition=""}
 <routing>
         <goals>
             <goal id="0" final="false" caption="goal 1">
@@ -198,7 +219,7 @@ the last vertex is equal to the first one.
         </goals>
     </routing>
     
-```
+~~~~
 
 ### Agents
 
@@ -546,7 +567,7 @@ Command line arguments
 
 The content of input.xml typically looks like this:
 
-``` {mathescape=""}
+~~~~ {mathescape=""}
 
 <?xml version="1.0" encoding="UTF-8"?>
 
@@ -604,7 +625,7 @@ The content of input.xml typically looks like this:
         <getProfile enabled="false" scale_x="10" scale_y="10"/>
     </method_D>
 </JPSreport>
-```
+~~~~
 
 -   ***Measurement areas:***\
     Two different measurement areas can be chosen corresponding to
@@ -650,9 +671,9 @@ The content of input.xml typically looks like this:
 
         <span>**Input parameters:**</span>
 
-        a\) Location of reference line (Start point and End point)
+        ​a) Location of reference line (Start point and End point)
 
-        b\) Value of time interval (frame)
+        ​b) Value of time interval (frame)
 
         <span>**Output data:**</span>
 
@@ -668,10 +689,10 @@ The content of input.xml typically looks like this:
 
         <span>**Input parameters:**</span>
 
-        a\) Rectangle measurement area (p1 (x, y), p2 (x, y), p3 (x, y), p4 (x,
-        y))
+        ​a) Rectangle measurement area (p1 (x, y), p2 (x, y), p3 (x, y),
+        p4 (x, y))
 
-        b\) Moving direction (e.g. from start point (p1) to end (p4))
+        ​b) Moving direction (e.g. from start point (p1) to end (p4))
 
         <span>**Output data:**</span> mean density and velocity of each
         pedestrian ($\rho_i$ and $v_i$).
