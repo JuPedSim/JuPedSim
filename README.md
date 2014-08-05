@@ -1,6 +1,6 @@
 ## JuPedSim
 Simulating pedestrians with state of the art models.
-The Jülich Pedestrian Simulator consists of four modules which are loosely
+The Jülich Pedestrian Simulator consists of three modules which are loosely
 coupled and can be used independently at the moment. These are:
 
 1. `JPScore`: the core module computing the trajectories. At the moment the [Generalized Centrifugal Force Model](http://arxiv.org/abs/1008.4297) is implemented. Another (yet unpuplished) model is implemented.
