@@ -1,9 +1,10 @@
 TEMPLATE = app
-TARGET = TraVisTo
+TARGET = JPSvis
 CONFIG += qt
 CONFIG += static
 QT += xml network
 
+QMAKE_CXXFLAGS += -Wno-deprecated -Wno-unused-parameter -Wno-unused-variable
 
 greaterThan(QT_MAJOR_VERSION, 4):QT += widgets
 
@@ -57,7 +58,7 @@ win32_te {
 	
 #Dynamic linking
 #Windows  VTK 5.10
-win32_dyn {
+win32 {
         INCLUDEPATH += C:/VTK/VTK5.1/include
         LIBS += -LC:/VTK/VTK5.1/bin_shared \
             -lvtksys \
