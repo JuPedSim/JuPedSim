@@ -171,7 +171,7 @@ void TimerCallback::Execute(vtkObject *caller, unsigned long eventId,
                             extern_glyphs_pedestrians_3D->Update();
                         }
 
-                        if(extern_tracking_enable) {
+                        if(SystemSettings::getShowTrajectories()) {
                             const std::vector<FrameElement *> &elements=frame->GetFrameElements();
 
                             for(unsigned int i=0; i<elements.size(); i++) {
@@ -206,10 +206,10 @@ void TimerCallback::Execute(vtkObject *caller, unsigned long eventId,
                     winName.append(" [ ");
                     s=QString::number(winSize[0]).toStdString();
                     winName.append(s);
-                    winName.append("X");
+                    winName.append(" x ");
                     s=QString::number(winSize[1]).toStdString();
                     winName.append(s);
-                    winName.append(" ] ");
+                    winName.append(" ] -->");
 
                     int posY=winSize[1]*(1.0-30.0/536.0);
                     int posX=winSize[0]*(1.0-450.0/720.0);
@@ -322,12 +322,11 @@ void TimerCallback::Execute(vtkObject *caller, unsigned long eventId,
 
 void TimerCallback::updateSettings(vtkRenderWindow* renderWindow)
 {
-
     static bool fullscreen=false;
 
     extern_glyphs_pedestrians_actor_2D->SetVisibility(SystemSettings::getShowAgents()&& SystemSettings::get2D());
     extern_glyphs_pedestrians_actor_3D->SetVisibility(SystemSettings::getShowAgents()&& !SystemSettings::get2D());
-    extern_trail_plotter->SetVisibility(extern_tracking_enable);
+    extern_trail_plotter->SetVisibility(SystemSettings::getShowTrajectories());
 
     //agents captions
     extern_pedestrians_labels->SetVisibility(SystemSettings::getShowAgentsCaptions());
