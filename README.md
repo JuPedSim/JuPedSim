@@ -10,4 +10,4 @@ model. It implements a couple of measurement methods including the [Voronoi-meth
 
 ## Further Reading
 
-The official page of the project can be found [here](http://www.jupedsim.org).
+The official page of the project is found [here](http://www.jupedsim.org).
