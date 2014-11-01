@@ -10,4 +10,6 @@ model. It implements a couple of measurement methods including the [Voronoi-meth
 
 ## Further Reading
 
-The official page of the project is found [here](http://www.jupedsim.org).
+The official page of the project is found [here](http://www.jupedsim.org). 
+
+The code is *actively developed* in a [GitLab repository](https://cst.version.fz-juelich.de/public/projects). Please consider cloning the code their.  
