@@ -10,4 +10,4 @@ model. It implements a couple of measurement methods including the [Voronoi-meth
 
 ## Repository
 
-The code is *actively developed* in a [GitLab repository](https://cst.version.fz-juelich.de/public/projects). Please consider cloning the code their.  
+The code is *actively developed* in a [GitLab repository](https://cst.version.fz-juelich.de/public/projects). Please consider cloning the code their.  To be **notified** of releases and updates please follow us [@JuPedSim](https://twitter.com/JuPedSim).
