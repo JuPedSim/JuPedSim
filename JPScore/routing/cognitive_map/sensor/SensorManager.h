@@ -1,7 +1,7 @@
 /**
  * \file        SensorManager.h
  * \date        Jan 1, 2014
- * \version     v0.5
+ * \version     v0.6
  * \copyright   <2009-2014> Forschungszentrum Jülich GmbH. All rights reserved.
  *
  * \section License
@@ -38,17 +38,20 @@ class Pedestrian;
 
 #include <vector>
 #include <set>
+#include <string>
 
 class SensorManager {
 public:
-     typedef int EventType;
-     static const EventType NONE = 0;
-     static const EventType INIT = 1;
-     static const EventType PERIODIC = 2;
-     static const EventType NO_WAY = 4;
+    typedef int EventType;
+    static const EventType NONE = 0;
+    static const EventType INIT = 1;
+    static const EventType PERIODIC = 2;
+    static const EventType NO_WAY = 4;
+    static const EventType CHANGED_ROOM = 8;
+    static const EventType NEW_DESTINATION = 16;
 
-
-     typedef std::vector<std::pair<AbstractSensor *, EventType>> SensorContainer;
+ 
+     typedef std::vector<std::pair<AbstractSensor *, EventType> > SensorContainer;
 
      /****************************
       * Constructors & Destructors
@@ -60,6 +63,7 @@ public:
      void execute(const Pedestrian *, EventType);
 
      static SensorManager * InitWithAllSensors(const Building *, CognitiveMapStorage *);
+     static SensorManager * InitWithCertainSensors(const Building*, CognitiveMapStorage*, std::vector<std::string> sensors);
 
 private:
      const Building * const building;

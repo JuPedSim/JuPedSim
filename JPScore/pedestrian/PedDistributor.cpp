@@ -1,7 +1,7 @@
 /**
  * \file        PedDistributor.cpp
  * \date        Oct 12, 2010
- * \version     v0.5
+ * \version     v0.6
  * \copyright   <2009-2014> Forschungszentrum Jülich GmbH. All rights reserved.
  *
  * \section License
@@ -24,8 +24,7 @@
  *
  *
  **/
-
-
+#include <cmath>
 #include "PedDistributor.h"
 #include "../tinyxml/tinyxml.h"
 #include "../geometry/Obstacle.h"
@@ -33,16 +32,14 @@
 #include "../pedestrian/Pedestrian.h"
 #include "../geometry/SubRoom.h"
 #include "../IO/OutputHandler.h"
-
-#include <cmath>
-
+// #include "../logging.h"
 using namespace std;
 
 
 /************************************************************
  StartDistributionRoom
  ************************************************************/
-StartDistributionRoom::StartDistributionRoom()
+StartDistributionRoom::StartDistributionRoom(int seed)
 {
     _roomID = -1;
     _nPeds = -1;
@@ -62,6 +59,7 @@ StartDistributionRoom::StartDistributionRoom()
     _yMin=-FLT_MAX;
     _yMax=FLT_MAX;
     _groupParameters=NULL;
+    _generator = std::default_random_engine(seed);
 }
 
 StartDistributionRoom::~StartDistributionRoom()
@@ -171,7 +169,7 @@ void StartDistributionRoom::SetAgentsNumber(int N)
 /************************************************************
  StartDistributionSubRoom
  ************************************************************/
-StartDistributionSubroom::StartDistributionSubroom() : StartDistributionRoom()
+StartDistributionSubroom::StartDistributionSubroom(unsigned int seed) : StartDistributionRoom(seed)
 {
      _subroomID = -1;
 }
@@ -198,11 +196,11 @@ void StartDistributionSubroom::SetSubroomID(int i)
  PedDistributor
  ************************************************************/
 
-PedDistributor::PedDistributor()
+PedDistributor::PedDistributor(const string& fileName, const std::map<int, AgentsParameters*>& agentPars, unsigned int seed)
 {
      _start_dis = vector<StartDistributionRoom* > ();
      _start_dis_sub = vector<StartDistributionSubroom* > ();
-     _agentsParameters=std::map<int, AgentsParameters*> ();
+     InitDistributor(fileName, agentPars, seed);
 }
 
 
@@ -217,28 +215,26 @@ PedDistributor::~PedDistributor()
      }
      _start_dis_sub.clear();
      _start_dis.clear();
-
      //empty the parameters maps
 }
 
-void PedDistributor::InitDistributor(ArgumentParser* argsParser)
+bool PedDistributor::InitDistributor(const string& fileName, const std::map<int, AgentsParameters*>& agentPars, unsigned int seed)
 {
-     _projectFilename=argsParser->GetProjectFile();
      Log->Write("INFO: \tLoading and parsing the persons attributes");
 
-     TiXmlDocument doc(_projectFilename);
+     TiXmlDocument doc(fileName);
 
      if (!doc.LoadFile()) {
           Log->Write("ERROR: \t%s", doc.ErrorDesc());
           Log->Write("ERROR: \t could not parse the project file");
-          exit(EXIT_FAILURE);
+          return false;
      }
 
 
      TiXmlNode* xRootNode = doc.RootElement()->FirstChild("agents");
      if( ! xRootNode ) {
           Log->Write("ERROR:\tcould not load persons attributes");
-          exit(EXIT_FAILURE);
+          return false;
      }
 
 
@@ -259,6 +255,8 @@ void PedDistributor::InitDistributor(ArgumentParser* argsParser)
           string gender = xmltoa(e->Attribute("gender"), "male");
           double height = xmltof(e->Attribute("height"), -1);
           double patience=  xmltof(e->Attribute("patience"), 5);
+          double premovement_mean= xmltof(e->Attribute("pre_movement_mean"), 0);
+          double premovement_sigma= xmltof(e->Attribute("pre_movement_sigma"), 0);
 
           double x_min=xmltof(e->Attribute("x_min"), -FLT_MAX);
           double x_max=xmltof(e->Attribute("x_max"), FLT_MAX);
@@ -269,17 +267,16 @@ void PedDistributor::InitDistributor(ArgumentParser* argsParser)
           //sanity check
           if((x_max<x_min) || (y_max<y_min) ){
               Log->Write("ERROR:\tinvalid bounds [%0.2f,%0.2f,%0.2f,%0.2f] of the group [%d]. Max and Min values mismatched?",group_id,x_min,x_max,y_min,y_max);
-              exit(EXIT_FAILURE);
-
+              return false;
           }
 
           StartDistributionRoom* dis=NULL;
 
           if(subroom_id==-1) {
-               dis = new StartDistributionRoom();
+               dis = new StartDistributionRoom(seed);
                _start_dis.push_back(dis);
           } else {
-               dis = new StartDistributionSubroom();
+               dis = new StartDistributionSubroom(seed);
                dynamic_cast<StartDistributionSubroom*>(dis)->SetSubroomID(subroom_id);
                _start_dis_sub.push_back(dynamic_cast<StartDistributionSubroom*>(dis));
           }
@@ -294,15 +291,15 @@ void PedDistributor::InitDistributor(ArgumentParser* argsParser)
           dis->SetRouterId(router_id);
           dis->SetHeight(height);
           dis->SetPatience(patience);
-          std::map<int, AgentsParameters*> agentsParameters=argsParser->GetAgentsParameters();
+          dis->InitPremovementTime(premovement_mean,premovement_sigma);
 
-          if(agentsParameters.count(agent_para_id)==0)
+          if(agentPars.count(agent_para_id)==0)
           {
-              Log->Write("WARNING:\t Please specify which set of agents parameters (agent_parameter_id) to use for the group [%d]!",group_id);
-              Log->Write("WARNING:\t Default values are not implemented yet");
-              exit(EXIT_FAILURE);
+              Log->Write("ERROR:\t Please specify which set of agents parameters (agent_parameter_id) to use for the group [%d]!",group_id);
+              Log->Write("ERROR:\t Default values are not implemented yet");
+              return false;
           }
-          dis->SetGroupParameters(agentsParameters[agent_para_id]);
+          dis->SetGroupParameters(agentPars.at(agent_para_id));
 
           if(e->Attribute("start_x") && e->Attribute("start_y")) {
                double startX = xmltof(e->Attribute("start_x"),NAN);
@@ -322,69 +319,100 @@ void PedDistributor::InitDistributor(ArgumentParser* argsParser)
           }
 
      Log->Write("INFO: \t...Done");
+     return true;
 }
 
-int PedDistributor::Distribute(Building* building) const
+bool PedDistributor::Distribute(Building* building) const
 {
-
      Log->Write("INFO: \tInit Distribute");
-
      int nPeds = 0;
 
-     //first compute all possible positions in the geometry
-     vector<vector< vector<Point > > > allFreePos = vector<vector< vector<Point > > >();
-     for (int r = 0; r < building->GetNumberOfRooms(); r++) {
-          vector< vector<Point > >  allFreePosRoom = vector< vector<Point > > ();
-          Room* room = building->GetRoom(r);
-          if(room->GetCaption()=="outside") continue;
-          for (int s = 0; s < room->GetNumberOfSubRooms(); s++) {
-               SubRoom* subr = room->GetSubRoom(s);
-               allFreePosRoom.push_back(PossiblePositions(subr));
-          }
-          allFreePos.push_back(allFreePosRoom);
+     // store the position in a map since we are not computing for all rooms/subrooms.
+     std::map <int, std::map <int, vector <Point> > > allFreePos;
+
+     //collect the available positions for that subroom
+     for(const auto& dist: _start_dis_sub)
+     {
+          int roomID = dist->GetRoomId();
+          Room* r = building->GetRoom(roomID);
+          if(!r) return false;
+
+          int subroomID = dist->GetSubroomID();
+          SubRoom* sr = r->GetSubRoom(subroomID);
+          if(!sr) return false;
+
+          auto&  allFreePosRoom=allFreePos[roomID];
+          // the positions were already computed
+          if(allFreePosRoom.count(subroomID)>0)
+               continue;
+
+          allFreePosRoom[subroomID]=PedDistributor::PossiblePositions(*sr);
      }
 
-     // first perform the distribution according to the  subrooms (if any)
+     //collect the available positions for that room
+     for(const auto& dist: _start_dis)
+     {
+          int roomID = dist->GetRoomId();
+          Room* r = building->GetRoom(roomID);
+          if(!r) return false;
 
+          //compute all subrooms since no specific one is given
+          for (const auto& it_sr: r->GetAllSubRooms())
+          {
+               int subroomID=it_sr.second->GetSubRoomID();
+               auto&  allFreePosRoom=allFreePos[roomID];
+               // the positions were already computed
+               if(allFreePosRoom.count(subroomID)>0)
+                    continue;
+
+               allFreePosRoom[subroomID]=PedDistributor::PossiblePositions(*it_sr.second);
+          }
+     }
+
+
+     // now proceed to the distribution
      int pid = 1; // the pedID is being increased throughout...
-     for (int i = 0; i < (int) _start_dis_sub.size(); i++) {
 
-          int room_id = _start_dis_sub[i]->GetRoomId();
+     for(const auto& dist: _start_dis_sub)
+     {
+          int room_id = dist->GetRoomId();
           Room* r = building->GetRoom(room_id);
           if(!r) continue;
-
           int roomID = r->GetID();
+          int subroomID = dist->GetSubroomID();
+          int N = dist->GetAgentsNumber();
+          SubRoom* sr = r->GetSubRoom(subroomID);
+          if(!sr) continue;
 
-          int subroomID = _start_dis_sub[i]->GetSubroomID();
-          int N = _start_dis_sub[i]->GetAgentsNumber();
           if (N < 0) {
-               Log->Write("ERROR: \t negative  (or null ) number of pedestrians!");
-               exit(EXIT_FAILURE);
+               Log->Write("ERROR: \t negative  number of pedestrians!");
+               return false;
           }
 
-          vector<Point> &allpos = allFreePos[roomID][subroomID];
+          auto& allpos = allFreePos[roomID][subroomID];
+
           int max_pos = allpos.size();
-          if (max_pos < N) {
+          if (max_pos < N)
+          {
                Log->Write("ERROR: \tCannot distribute %d agents in Room %d . Maximum allowed: %d\n",
                           N, roomID, allpos.size());
-               exit(EXIT_FAILURE);
+              return false;
           }
 
           // Distributing
           Log->Write("INFO: \tDistributing %d Agents in Room/Subrom [%d/%d]! Maximum allowed: %d", N, roomID, subroomID, max_pos);
-          SubRoom* sr = building->GetRoom(roomID)->GetSubRoom(subroomID);
-          DistributeInSubRoom(sr, N, allpos, &pid,_start_dis_sub[i],building);
+          DistributeInSubRoom(sr, N, allpos, &pid,dist,building);
           Log->Write("\t...Done");
-
           nPeds += N;
      }
 
      // then continue the distribution according to the rooms
-     for (int i = 0; i < (int) _start_dis.size(); i++) {
-          int room_id = _start_dis[i]->GetRoomId();
+     for(const auto& dist: _start_dis)
+     {
+          int room_id = dist->GetRoomId();
           Room* r = building->GetRoom(room_id);
           if(!r) continue;
-          int N = _start_dis[i]->GetAgentsNumber();
+          int N = dist->GetAgentsNumber();
           if (N < 0) {
                Log->Write("ERROR: \t negative or null number of pedestrians! Ignoring");
                continue;
@@ -397,7 +425,7 @@ int PedDistributor::Distribute(Building* building) const
           vector<int> max_anz = vector<int>();
           vector<int> akt_anz = vector<int>();
 
-          vector< vector<Point > >&  allFreePosInRoom=allFreePos[room_id];
+          auto&  allFreePosInRoom=allFreePos[room_id];
           for (int is = 0; is < r->GetNumberOfSubRooms(); is++) {
                SubRoom* sr = r->GetSubRoom(is);
                double area = sr->GetArea();
@@ -408,8 +436,8 @@ int PedDistributor::Distribute(Building* building) const
           }
           if (max_pos < N) {
                Log->Write("ERROR: \t Distribution of %d pedestrians in Room %d not possible! Maximum allowed: %d\n",
-                          N, r->GetID(), max_pos);
-               exit(EXIT_FAILURE);
+                         N, r->GetID(), max_pos);
+               return false;
           }
           ppm = N / sum_area;
           // Anzahl der Personen pro SubRoom bestimmen
@@ -443,7 +471,7 @@ int PedDistributor::Distribute(Building* building) const
           for (unsigned int is = 0; is < akt_anz.size(); is++) {
                SubRoom* sr = r->GetSubRoom(is);
                if (akt_anz[is] > 0)
-                    DistributeInSubRoom(sr, akt_anz[is], allFreePosInRoom[is], &pid, (StartDistributionSubroom*)_start_dis[i],building);
+                    DistributeInSubRoom(sr, akt_anz[is], allFreePosInRoom[is], &pid, (StartDistributionSubroom*)dist,building);
           }
           nPeds += N;
      }
@@ -451,28 +479,9 @@ int PedDistributor::Distribute(Building* building) const
      return nPeds;
 }
 
-bool PedDistributor::FindPedAndDeleteFromRoom(Building* building,Pedestrian*ped) const
-{
-
-     for (int i = 0; i < building->GetNumberOfRooms(); i++) {
-          Room* room = building->GetRoom(i);
-          for (int j = 0; j < room->GetNumberOfSubRooms(); j++) {
-               SubRoom* sub = room->GetSubRoom(j);
-               for (int k = 0; k < sub->GetNumberOfPedestrians(); k++) {
-                    Pedestrian* p=sub->GetPedestrian(k);
-                    if(p->GetID()==ped->GetID()) {
-                         sub->DeletePedestrian(k);
-                         return true;
-                    }
-               }
-          }
-     }
-     return false;
-}
-
 
 vector<Point> PedDistributor::PositionsOnFixX(double min_x, double max_x, double min_y, double max_y,
-          SubRoom* r, double bufx, double bufy, double dy) const
+          const SubRoom& r, double bufx, double bufy, double dy)
 {
      vector<Point> positions;
      double x = (max_x + min_x)*0.5;
@@ -482,25 +491,24 @@ vector<Point> PedDistributor::PositionsOnFixX(double min_x, double max_x, double
           Point pos = Point(x, y);
           // Abstand zu allen Wänden prüfen
           int k;
-          for (k = 0; k < r->GetNumberOfWalls(); k++) {
-               if (r->GetWall(k).DistTo(pos) < max(bufx, bufy) || !r->IsInSubRoom(pos)) {
+          for (k = 0; k < r.GetNumberOfWalls(); k++) {
+               if (r.GetWall(k).DistTo(pos) < max(bufx, bufy) || !r.IsInSubRoom(pos)) {
                     break; // Punkt ist zu nah an einer Wand oder nicht im Raum => ungültig
                }
           }
-          if (k == r->GetNumberOfWalls()) {
+          if (k == r.GetNumberOfWalls()) {
                //check all transitions
                bool tooNear=false;
-               for(unsigned int t=0; t<r->GetAllTransitions().size(); t++) {
-                    if(r->GetTransition(t)->DistTo(pos)<J_EPS_GOAL) {
+               for(unsigned int t=0; t<r.GetAllTransitions().size(); t++) {
+                    if(r.GetTransition(t)->DistTo(pos)<J_EPS_GOAL) {
                          //too close
                          tooNear=true;
                          break;
                     }
                }
 
-
-               for(unsigned int c=0; c<r->GetAllCrossings().size(); c++) {
-                    if(r->GetCrossing(c)->DistTo(pos)<J_EPS_GOAL) {
+               for(unsigned int c=0; c<r.GetAllCrossings().size(); c++) {
+                    if(r.GetCrossing(c)->DistTo(pos)<J_EPS_GOAL) {
                          //too close
                          tooNear=true;
                          break;
@@ -515,7 +523,7 @@ vector<Point> PedDistributor::PositionsOnFixX(double min_x, double max_x, double
 }
 
 vector<Point>PedDistributor::PositionsOnFixY(double min_x, double max_x, double min_y, double max_y,
-          SubRoom* r, double bufx, double bufy, double dx) const
+          const SubRoom& r, double bufx, double bufy, double dx)
 {
      vector<Point> positions;
      double y = (max_y + min_y)*0.5;
@@ -525,24 +533,24 @@ vector<Point>PedDistributor::PositionsOnFixY(double min_x, double max_x, double 
           Point pos = Point(x, y);
           // check distance to wall
           int k;
-          for (k = 0; k < r->GetNumberOfWalls(); k++) {
-               if (r->GetWall(k).DistTo(pos) < max(bufx, bufy) || !r->IsInSubRoom(pos)) {
+          for (k = 0; k < r.GetNumberOfWalls(); k++) {
+               if (r.GetWall(k).DistTo(pos) < max(bufx, bufy) || !r.IsInSubRoom(pos)) {
                     break; // Punkt ist zu nah an einer Wand oder nicht im Raum => ungültig
                }
           }
-          if (k == r->GetNumberOfWalls()) {
+          if (k == r.GetNumberOfWalls()) {
                //check all transitions
                bool tooNear=false;
-               for(unsigned int t=0; t<r->GetAllTransitions().size(); t++) {
-                    if(r->GetTransition(t)->DistTo(pos)<J_EPS_GOAL) {
+               for(unsigned int t=0; t<r.GetAllTransitions().size(); t++) {
+                    if(r.GetTransition(t)->DistTo(pos)<J_EPS_GOAL) {
                          //too close
                          tooNear=true;
                          break;
                     }
                }
 
-               for(unsigned int c=0; c<r->GetAllCrossings().size(); c++) {
-                    if(r->GetCrossing(c)->DistTo(pos)<J_EPS_GOAL) {
+               for(unsigned int c=0; c<r.GetAllCrossings().size(); c++) {
+                    if(r.GetCrossing(c)->DistTo(pos)<J_EPS_GOAL) {
                          //too close
                          tooNear=true;
                          break;
@@ -555,8 +563,7 @@ vector<Point>PedDistributor::PositionsOnFixY(double min_x, double max_x, double 
      return positions;
 }
 
-//TODO: this can be speeded up by passing position as reference
-vector<Point> PedDistributor::PossiblePositions(SubRoom* r) const
+vector<Point >  PedDistributor::PossiblePositions(const SubRoom& r)
 {
      double uni = 0.7; // wenn ein Raum in x oder y -Richtung schmaler ist als 0.7 wird in der Mitte verteilt
      double bufx = 0.12;
@@ -565,16 +572,14 @@ vector<Point> PedDistributor::PossiblePositions(SubRoom* r) const
      double amin=0.18; // = GetAmin()->GetMean();
      double bmax=0.25; // = GetBmax()->GetMean();
 
-     //TODO:
-     //double dx = GetAmin()->GetMean() + bufx;
-     //double dy = GetBmax()->GetMean() + bufy;
-
      double dx = amin + bufx;
      double dy = bmax + bufy;
 
+     double max_buf=max(bufx, bufy);
+
      vector<double>::iterator min_x, max_x, min_y, max_y;
-     vector<Point> poly = r->GetPolygon();
-     vector<Point> positions;
+     const vector<Point>& poly = r.GetPolygon();
+     vector<Point > all_positions;
      vector<double> xs;
      vector<double> ys;
 
@@ -589,57 +594,63 @@ vector<Point> PedDistributor::PossiblePositions(SubRoom* r) const
      max_y = max_element(ys.begin(), ys.end());
 
      if (*max_y - *min_y < uni) {
-          positions = PositionsOnFixY(*min_x, *max_x, *min_y, *max_y, r, bufx, bufy, dx);
+          all_positions = PositionsOnFixY(*min_x, *max_x, *min_y, *max_y, r, bufx, bufy, dx);
      } else if (*max_x - *min_x < uni) {
-          positions = PositionsOnFixX(*min_x, *max_x, *min_y, *max_y, r, bufx, bufy, dy);
+          all_positions = PositionsOnFixX(*min_x, *max_x, *min_y, *max_y, r, bufx, bufy, dy);
      } else {
           // create the grid
           double x = (*min_x);
-          while (x < *max_x) {
+          while (x < *max_x)
+          {
                double y = (*min_y);
-               while (y < *max_y) {
+               while (y < *max_y)
+               {
                     y += dy;
                     Point pos = Point(x, y);
                     bool tooNear=false;
 
-                    // check the distance to all Wall
-                    for (int k = 0; k < r->GetNumberOfWalls(); k++) {
-                         const Wall& w = r->GetWall(k);
-                         if (w.DistTo(pos) < max(bufx, bufy) || !r->IsInSubRoom(pos)) {
+                    //skip if the position is not in the polygon
+                    if(!r.IsInSubRoom(pos)) continue;
+
+                    // check the distance to all Walls
+                    for (const auto & w : r.GetAllWalls())
+                    {
+                         if (w.DistTo(pos) < max_buf) {
                               tooNear=true;
                               break; // too close
                          }
                     }
 
-                    //check all transitions
+                    //check the distance to all transitions
                     if(tooNear==true) continue;
-                    for(unsigned int t=0; t<r->GetAllTransitions().size(); t++) {
-                         if(r->GetTransition(t)->DistTo(pos)<max(bufx, bufy)) {
+                    for (const auto & t : r.GetAllTransitions())
+                    {
+                         if(t->DistTo(pos)<max_buf) {
                               //too close
                               tooNear=true;
                               break;
                          }
                     }
 
-                    //  and check all crossings
+                    //  and check the distance to all crossings
                     if(tooNear==true) continue;
-                    for(unsigned int c=0; c<r->GetAllCrossings().size(); c++) {
-                         if(r->GetCrossing(c)->DistTo(pos)<max(bufx, bufy)) {
+                    for (const auto & c : r.GetAllCrossings())
+                    {
+                         if(c->DistTo(pos)<max_buf) {
                               //too close
                               tooNear=true;
                               break;
                          }
                     }
 
-                    // and finally all opened obstacles
+                    // and finally the distance to all opened obstacles
                     if(tooNear==true) continue;
 
-                    const vector<Obstacle*>& obstacles = r->GetAllObstacles();
-                    for (unsigned int obs = 0; obs < obstacles.size(); ++obs) {
-                         Obstacle *obst =obstacles[obs];
-                         const vector<Wall>& walls = obst->GetAllWalls();
-                         for (unsigned int i = 0; i < walls.size(); i++) {
-                              if (walls[i].DistTo(pos) < max(bufx, bufy) || !r->IsInSubRoom(pos)) {
+                    for (const auto & obst : r.GetAllObstacles())
+                    {
+                         for (const auto & wall : obst->GetAllWalls())
+                         {
+                              if (wall.DistTo(pos) < max_buf) {
                                    tooNear=true;
                                    break; // too close
                               }
@@ -648,21 +659,21 @@ vector<Point> PedDistributor::PossiblePositions(SubRoom* r) const
                          //only continue if...
                          if(tooNear==true) continue;
 
-                         if((obst->GetClosed()==1) && (obst->Contains(pos)==true)) {
+                         if((obst->GetClosed()==1) && (obst->Contains(pos)==true))
+                         {
                               tooNear=true;
                               break; // too close
                          }
                     }
 
-                    if(tooNear==false) positions.push_back(pos);
+                    if(tooNear==false) all_positions.push_back(pos);
                }
                x += dx;
           }
      }
 
-     //shuffle the array
-     std::random_shuffle(positions.begin(), positions.end());
-     return positions;
+     std::random_shuffle(all_positions.begin(), all_positions.end());
+     return all_positions;
 }
 /* Verteilt N Fußgänger in SubRoom r
  * Algorithms:
@@ -711,7 +722,9 @@ void PedDistributor::DistributeInSubRoom(SubRoom* r,int nAgents , vector<Point>&
         E.SetBmin(agents_para->GetBmin());
         ped->SetEllipse(E);
         ped->SetTau(agents_para->GetTau());
-        ped->SetV0Norm(agents_para->GetV0());
+        ped->SetV0Norm(agents_para->GetV0(),
+                  agents_para->GetV0DownStairs(),
+                  agents_para->GetV0UpStairs());
         //ped->SetV(Point(0.0,0.0));
 
         // first default Position
@@ -739,12 +752,13 @@ void PedDistributor::DistributeInSubRoom(SubRoom* r,int nAgents , vector<Point>&
         }
 
         Point pos = positions[index];
-        ped->SetPos(pos);
+        ped->SetPos(pos,true); //true for the initial position
         ped->SetBuilding(building);
         positions.erase(positions.begin() + index);
         ped->SetRoomID(para->GetRoomId(),"");
         ped->SetSubRoomID(r->GetSubRoomID());
         ped->SetPatienceTime(para->GetPatience());
+        ped->SetPremovementTime(para->GetPremovementTime());
         const Point& start_pos = para->GetStartPosition();
 
 
@@ -756,12 +770,13 @@ void PedDistributor::DistributeInSubRoom(SubRoom* r,int nAgents , vector<Point>&
                 exit(EXIT_FAILURE);
             }
 
-            ped->SetPos(start_pos);
+            ped->SetPos(start_pos,true); //true for the initial position
             Log->Write("INFO: \t fixed position for ped %d in Room %d %s",
                     *pid, para->GetRoomId(), start_pos.toString().c_str());
         }
 
-        r->AddPedestrian(ped);
+        //r->AddPedestrian(ped);
+        building->AddPedestrian(ped);
         (*pid)++;
     }
 }
@@ -818,4 +833,14 @@ void StartDistributionRoom::Setbounds(double bounds[4])
     _xMax=bounds[1];
     _yMin=bounds[2];
     _yMax=bounds[3];
+}
+
+void StartDistributionRoom::InitPremovementTime(double mean, double stdv)
+{
+     _premovementTime = std::normal_distribution<double>(mean,stdv);
+}
+
+double StartDistributionRoom::GetPremovementTime()
+{
+     return _premovementTime(_generator);
 }

@@ -1,7 +1,7 @@
 /**
  * \file        Ellipse.cpp
  * \date        Sep 30, 2010
- * \version     v0.5
+ * \version     v0.6
  * \copyright   <2009-2014> Forschungszentrum Jülich GmbH. All rights reserved.
  *
  * \section License
@@ -30,8 +30,9 @@
 
 #define _USE_MATH_DEFINES
 #include <math.h>
+#ifndef M_PI
 #define M_PI            3.14159265358979323846
-
+#endif
 using namespace std;
 
 
@@ -195,7 +196,7 @@ double JEllipse::GetEA() const
 double JEllipse::GetEB() const
 {
      double b_shoulder = _Bmin; /// width of shoulder. todo: find out empricial value
-     double v_min = 0.01;
+     double v_min = 0.001;
      double a = 0.49;
      double b = -1.17;
      double v = _vel.Norm();

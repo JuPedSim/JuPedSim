@@ -1,7 +1,7 @@
 /**
  * \file        MeshRouter.cpp
  * \date        Aug 21, 2013
- * \version     v0.5
+ * \version     v0.6
  * \copyright   <2009-2014> Forschungszentrum Jülich GmbH. All rights reserved.
  *
  * \section License
@@ -40,6 +40,12 @@ MeshRouter::MeshRouter()
 {
      _building=NULL;
      _meshdata=NULL;
+}
+
+MeshRouter::MeshRouter(int id, RoutingStrategy s) : Router(id, s)
+{
+    _building=NULL;
+    _meshdata=NULL;
 }
 
 MeshRouter::~MeshRouter()
@@ -569,8 +575,10 @@ vector<MeshEdge*> MeshRouter::AStar(Pedestrian* p,int& status)const
      while(act_id!=c_goal_id) {
           act_cost=costlist[act_id];
           //astar_print(closedlist,inopenlist,predlist,c_totalcount,act_id);
-          if (act_cell==NULL)
-               cout<<"act_cell=NULL !!"<<endl;
+          if (act_cell==NULL){
+               Log->Write("Error:\tact_cell=NULL");
+               //should exit here?
+          }
 
           for(unsigned int i=0; i<act_cell->GetEdges().size(); i++) {
                int act_edge_id=act_cell->GetEdges().at(i);
@@ -845,7 +853,7 @@ void MeshRouter::FixMeshEdges()
      }
 }
 
-void MeshRouter::Init(Building* b)
+bool MeshRouter::Init(Building* b)
 {
      _building=b;
      //Log->Write("WARNING: \tdo not use this  <<Mesh>>  router !!");
@@ -955,8 +963,23 @@ void MeshRouter::Init(Building* b)
      }
      _meshdata=new MeshData(nodes,edges,outedges,mCellGroups);
      FixMeshEdges();
+     return true;
 }
 
+void MeshRouter::WriteMeshToFile(const string& filename)
+{
+    // in the case the navigation mesh should be written to a file
+    Log->Write("INFO: \tWriting the navigation mesh to: " + filename);
+    //Navigation mesh implementation
+    NavMesh* nv= new NavMesh(_building);
+    nv->BuildNavMesh();
+    //nv->WriteToFile("../pedunc/examples/stadium/arena.nav");
+    nv->WriteToFile(filename+".nav");
+    nv->WriteToFileTraVisTo(filename);
+    //nv->WriteScenario();
+    //iod->WriteGeometryRVO(pBuilding);exit(EXIT_FAILURE);
+    //iod->WriteNavMeshORCA(pBuilding);exit(EXIT_FAILURE);
+}
 
 string MeshRouter::GetMeshFileName() const
 {

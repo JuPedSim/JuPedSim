@@ -1,8 +1,8 @@
 /**
  * \file        main.cpp
  * \date        Jan 15, 2013
- * \version     v0.5
- * \copyright   <2009-2014> Forschungszentrum Jülich GmbH. All rights reserved.
+ * \version     v0.6
+ * \copyright   <2009-2015> Forschungszentrum Jülich GmbH. All rights reserved.
  *
  * \section License
  * This file is part of JuPedSim.
@@ -26,59 +26,70 @@
  *
  **/
 
-
 #include "geometry/Building.h"
 #include "general/ArgumentParser.h"
 #include "./Simulation.h"
-
-
-
+// #include "logging.h"
 
 int main(int argc, char **argv)
 {
+     //gathering some statistics about the runtime
      time_t starttime, endtime;
+
      // Log = new FileHandler("./Logfile.dat");
      Log = new STDIOHandler();
+
      // Parsing the arguments
-
      ArgumentParser* args = new ArgumentParser();
-     args->ParseArgs(argc, argv);
+     bool status=args->ParseArgs(argc, argv);
 
-     // create and init the simulation engine
+     // create and initialize the simulation engine
      // Simulation
      time(&starttime);
-     Log->Write("INFO: \tStart runSimulation()");
 
-     Simulation sim = Simulation();
-     sim.InitArgs(args);
-     int evacTime = sim.RunSimulation();
-     Log->Write("\nINFO: \tEnd runSimulation()");
-     time(&endtime);
+     Simulation sim(*args);
 
-     // some output
-     double execTime = difftime(endtime, starttime);
+     if(status&&sim.InitArgs(*args))
+     {
+          Log->Write("INFO: \tStart runSimulation()");
+          int evacTime = sim.RunSimulation();
+          Log->Write("\nINFO: \tEnd runSimulation()");
+          time(&endtime);
 
-     if (sim.GetPedsNumber())
-          Log->Write("\nPedestrians not evacuated [%d] using [%d] threads",
-                     sim.GetPedsNumber(),
-                     args->GetMaxOpenMPThreads());
+          // some output
+          if(args->ShowStatistics())
+          {
+               sim.PrintStatistics();
+          }
 
-     Log->Write("\nExec Time [s]   : %.2f", execTime);
-     Log->Write("Evac Time [s]     : %d", evacTime);
-     Log->Write("Real Time Factor  : %.2f X", evacTime / execTime);
-     Log->Write("Number of Threads Used  : %d", args->GetMaxOpenMPThreads());
-     Log->Write("Warnings          : %d", Log->GetWarnings() );
-     Log->Write("Errors            : %d", Log->GetErrors() );
-     // sim.PrintStatistics();
-     if (NULL == dynamic_cast<STDIOHandler*>(Log)) {
-          printf("\nExec Time [s]       : %4.2f\n", execTime);
-          printf("Evac Time [s]       : %d\n", evacTime);
-          printf("Real Time Factor    : %.2f (X)\n", evacTime / execTime);
-          printf("Number of Threads Used  : %d\n", args->GetMaxOpenMPThreads());
-          printf("Warnings            : %d\n", Log->GetWarnings() );
-          printf("Errors              : %d\n", Log->GetErrors() );
+          if (sim.GetPedsNumber())
+          {
+               Log->Write("WARNING: \nPedestrians not evacuated [%d] using [%d] threads",
+                         sim.GetPedsNumber(), args->GetMaxOpenMPThreads());
+          }
+
+          double execTime = difftime(endtime, starttime);
+          Log->Write("\nExec Time [s]   : %.2f", execTime);
+          Log->Write("Evac Time [s]     : %d", evacTime);
+          Log->Write("Realtime Factor   : %.2f X", evacTime / execTime);
+          Log->Write("Number of Threads : %d", args->GetMaxOpenMPThreads());
+          Log->Write("Warnings          : %d", Log->GetWarnings());
+          Log->Write("Errors            : %d", Log->GetErrors());
+
+          if (NULL == dynamic_cast<STDIOHandler*>(Log))
+          {
+               printf("\nExec Time [s]     : %4.2f\n", execTime);
+               printf("Evac Time [s]       : %d\n", evacTime);
+               printf("Realtime Factor     : %.2f (X)\n", evacTime / execTime);
+               printf("Number of Threads   : %d\n", args->GetMaxOpenMPThreads());
+               printf("Warnings            : %d\n", Log->GetWarnings());
+               printf("Errors              : %d\n", Log->GetErrors());
+          }
      }
-
+     else
+     {
+          Log->Write("INFO:\tFinishing...");
+     }
      // do the last cleaning
      delete args;
      delete Log;

@@ -1,7 +1,7 @@
 /**
  * \file        IODispatcher.h
  * \date        Nov 20, 2010
- * \version     v0.5
+ * \version     v0.6
  * \copyright   <2009-2014> Forschungszentrum Jülich GmbH. All rights reserved.
  *
  * \section License
@@ -49,7 +49,7 @@ public:
 
      void AddIO(Trajectories* ioh);
      const std::vector<Trajectories*>& GetIOHandlers();
-     void WriteHeader(int nPeds, double fps, Building* building, int seed);
+     void WriteHeader(long nPeds, double fps, Building* building, int seed);
      void WriteGeometry(Building* building);
      void WriteFrame(int frameNr, Building* building);
      void WriteFooter();
@@ -63,7 +63,7 @@ public:
           _outputHandler = NULL;
      };
      virtual ~Trajectories(){};
-     virtual void WriteHeader(int nPeds, double fps, Building* building, int seed)=0;
+     virtual void WriteHeader(long nPeds, double fps, Building* building, int seed)=0;
      virtual void WriteGeometry(Building* building)=0;
      virtual void WriteFrame(int frameNr, Building* building)=0;
      virtual void WriteFooter()=0;
@@ -103,7 +103,7 @@ public:
      TrajectoriesJPSV04(){};
      virtual ~TrajectoriesJPSV04(){};
 
-     virtual void WriteHeader(int nPeds, double fps, Building* building, int seed);
+     virtual void WriteHeader(long nPeds, double fps, Building* building, int seed);
      virtual void WriteGeometry(Building* building);
      virtual void WriteFrame(int frameNr, Building* building);
      virtual void WriteFooter();
@@ -116,7 +116,7 @@ public:
      TrajectoriesJPSV05(){};
      virtual ~TrajectoriesJPSV05(){};
 
-     virtual void WriteHeader(int nPeds, double fps, Building* building, int seed);
+     virtual void WriteHeader(long nPeds, double fps, Building* building, int seed);
      virtual void WriteGeometry(Building* building);
      virtual void WriteFrame(int frameNr, Building* building);
      virtual void WriteFooter();
@@ -133,7 +133,7 @@ public:
      }
      ;
 
-     virtual void WriteHeader(int nPeds, double fps, Building* building, int seed);
+     virtual void WriteHeader(long nPeds, double fps, Building* building, int seed);
      virtual void WriteGeometry(Building* building);
      virtual void WriteFrame(int frameNr, Building* building);
      virtual void WriteFooter();
@@ -150,7 +150,7 @@ public:
      }
      ;
 
-     virtual void WriteHeader(int nPeds, double fps, Building* building, int seed);
+     virtual void WriteHeader(long nPeds, double fps, Building* building, int seed);
      virtual void WriteGeometry(Building* building);
      virtual void WriteFrame(int frameNr, Building* building);
      virtual void WriteFooter();
@@ -183,7 +183,7 @@ public:
      TrajectoriesJPSV06(){};
      virtual ~TrajectoriesJPSV06(){ };
 
-     virtual void WriteHeader(int nPeds, double fps, Building* building, int seed);
+     virtual void WriteHeader(long nPeds, double fps, Building* building, int seed);
      virtual void WriteGeometry(Building* building);
      virtual void WriteFrame(int frameNr, Building* building);
      virtual void WriteFooter();

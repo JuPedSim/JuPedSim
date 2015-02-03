@@ -1,7 +1,7 @@
 /**
  * \file        MeshRouter.h
  * \date        Aug 21, 2013
- * \version     v0.5
+ * \version     v0.6
  * \copyright   <2009-2014> Forschungszentrum Jülich GmbH. All rights reserved.
  *
  * \section License
@@ -30,6 +30,7 @@
 #define MESHROUTER_H_
 
 #include "Router.h"
+#include "NavMesh.h"
 #include "mesh/Mesh.h"
 
 class MeshRouter: public Router {
@@ -42,13 +43,16 @@ private:
      NavLine FunnelRad(Point&,Point&,std::vector<MeshEdge*>);
      MeshEdge* Visibility(Point&,Point&,std::vector<MeshEdge*>)const;
      std::string GetMeshFileName() const;
+     void WriteMeshToFile(const std::string& filename);
      void FixMeshEdges();
+
 public:
      MeshRouter();
+     MeshRouter(int id, RoutingStrategy s);
      virtual ~MeshRouter();
 
      virtual int FindExit(Pedestrian* p);
-     virtual void Init(Building* b);
+     virtual bool Init(Building* b);
 
 };
 

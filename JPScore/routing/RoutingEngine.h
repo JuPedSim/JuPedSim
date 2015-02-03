@@ -1,7 +1,7 @@
 /**
  * \file        RoutingEngine.h
  * \date        Jan 10, 2013
- * \version     v0.5
+ * \version     v0.6
  * \copyright   <2009-2014> Forschungszentrum Jülich GmbH. All rights reserved.
  *
  * \section License
@@ -64,18 +64,22 @@ public:
 
      /**
       * Return a trip/route with the particular id
-      * FIXME referenz?
-      * @param id
-      * @return
+      * @param id, the trip id
+      * @return the corresponding trip
       */
-     const std::vector<std::string> GetTrip(int id) const;
+     const std::vector<std::string>& GetTrip(int id) const;
+
+     /**
+      * @return all available routers
+      *
+      */
+     const std::vector<Router*> GetAvailableRouters() const;
 
      /**
       * Find the next destination using the appropriate router from
       * the collection for the pedestrian ped.
       */
      void FindRoute(Pedestrian* ped);
-
 
      /**
       * Add a new router to the routing system
@@ -90,14 +94,17 @@ public:
 
      /**
       * Return the router with the specified  id
+      * TODO: Remove this method
+      * Should prefer etRouter(RoutingStrategy strategy)
       */
      Router* GetRouter(int id) const;
 
      /**
       * Initialize all routers with the current building object
       * @param building
+      * @return the status of the initialisation
       */
-     void Init(Building* building);
+     bool Init(Building* building);
 
 private:
      /// collections of all routers used

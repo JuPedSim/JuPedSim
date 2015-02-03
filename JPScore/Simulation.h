@@ -1,8 +1,8 @@
 /**
  * \file        Simulation.h
  * \date        Dec 15, 2010
- * \version     v0.5
- * \copyright   <2009-2014> Forschungszentrum Jülich GmbH. All rights reserved.
+ * \version     v0.6
+ * \copyright   <2009-2014> Forschungszentrum J?lich GmbH. All rights reserved.
  *
  * \section License
  * This file is part of JuPedSim.
@@ -36,107 +36,100 @@
 
 #include "general/ArgumentParser.h"
 #include "geometry/Building.h"
+#include "geometry/SubRoom.h"
 #include "IO/OutputHandler.h"
 #include "IO/IODispatcher.h"
-#include "math/ForceModel.h"
+#include "math/OperationalModel.h"
 #include "math/ODESolver.h"
 #include "routing/GlobalRouter.h"
 #include "routing/QuickestPathRouter.h"
 #include "routing/DirectionStrategy.h"
 #include "routing/DummyRouter.h"
-#include "routing/GraphRouter.h"
-#include "routing/NavMesh.h"
 #include "routing/MeshRouter.h"
 #include "routing/RoutingEngine.h"
 #include "routing/SafestPathRouter.h"
 #include "pedestrian/PedDistributor.h"
-#include "events/EventManager.h"
 #include "routing/CognitiveMapRouter.h"
+#include "events/EventManager.h"
 
-//OutputHandler* Log;
-
-class Simulation {
+class Simulation
+{
 private:
      ///Number of pedestrians in the simulation
-     int _nPeds;
-     ///Maximum simulation time
-     double _tmax;
-     /// time step
-     double _deltaT;
-     /// frame rate for the trajectories
-     double _fps;
-     ///seed using for the random number generator
-     unsigned int _seed;
-     /// building object
-     Building* _building;
-     ///initial distribution of the pedestrians
-     PedDistributor* _distribution;
-     /// door crossing strategy for the pedestrians
-     DirectionStrategy* _direction;
-     /// Force model to use
-     ForceModel* _model;
-     /// differential equation solver
-     ODESolver* _solver;
-     /// writing the trajectories to file
-     IODispatcher* _iod;
-     ///new: EventManager
-     EventManager* _em;
-     /// argument parser
-     ArgumentParser* _argsParser;
-
+    long _nPeds;
+    ///Maximum simulation time
+    double _tmax;
+    /// time step
+    double _deltaT;
+    /// frame rate for the trajectories
+    double _fps;
+    ///seed using for the random number generator
+    unsigned int _seed;
+    /// building object
+    std::unique_ptr<Building> _building;
+    /// Force model to use
+    std::shared_ptr<OperationalModel> _operationalModel;
+    /// differential equation solver
+    std::shared_ptr<RoutingEngine> _routingEngine;
+    ODESolver* _solver;
+    /// writing the trajectories to file
+    IODispatcher* _iod;
+    ///new: EventManager
+    EventManager* _em;
+    /// argument parser
+    ArgumentParser _argsParser;
+    /// profiling flag
+    bool _profiling;
+    /// architecture flag
+    int _hpc;
 
 public:
-     /**
-      * constructor
-      */
-     Simulation();
+    Simulation(const ArgumentParser& args);
+    virtual ~Simulation();
 
-     /**
-      * Destructor
-      */
-     virtual ~Simulation();
+    /**
+     * Initialize the number of agents in the simulation
+     */
+    long GetPedsNumber() const;
 
-     /**
-      * Initialize the number of agents in the simulation
-      */
-     void SetPedsNumber(int i);
+    /**
+     * Read parameters from the argument parser class.
+     */
+    bool InitArgs(const ArgumentParser& args);
 
-     /**
-      * Initialize the number of agents in the simulation
-      */
-     int GetPedsNumber() const;
+    /**
+     * @return the total simulated/evacuation time
+     */
+    int RunSimulation();
 
-     /**
-      * Returns the number of agents when running on a distributed system (MPI)
-      * NOT IMPLEMENTED
-      */
-     int GetNPedsGlobal() const;
+    /**
+     * Updathe route of the pedestrians and reassign rooms, in the case a room change happens
+     */
+    void UpdateRoutesAndLocations();
 
-     /**
-      * @return the building object containing all geometry elements
-      */
-     Building* GetBuilding() const;
 
-     /**
-      * Read parameters from the argument parser class.
-      */
-     void InitArgs(ArgumentParser *args);
+    //void Update(double &b, double &p, double &t, double &g);
 
-     /**
-      *
-      * @return the total simulated/evacuation time
-      */
-     int RunSimulation();
+    /**
+     * Set the ProfilingFlag
+     */
+    void SetProfileFlag(bool flag);
 
-     /**
-      * Update the pedestrians states: positions, velocity, route
-      */
-     void Update();
+    /**
+     * Get the ProfileFlag
+     */
+    bool GetProfileFlag();
 
-     /**
-      * print some statistics about the simulation
-      */
-     void PrintStatistics();
+    /**
+     * Get the HPCFlag
+     */
+    int GetHPCFlag();
+
+    /**
+     * print some statistics about the simulation
+     */
+    void PrintStatistics();
+
 };
 
 #endif /*SIMULATION_H_*/

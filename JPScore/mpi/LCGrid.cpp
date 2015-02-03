@@ -1,8 +1,8 @@
 /**
  * \file        LCGrid.cpp
  * \date        Nov 16, 2010
- * \version     v0.5
- * \copyright   <2009-2014> Forschungszentrum Jülich GmbH. All rights reserved.
+ * \version     v0.6
+ * \copyright   <2009-2014> Forschungszentrum J?lich GmbH. All rights reserved.
  *
  * \section License
  * This file is part of JuPedSim.
@@ -36,14 +36,13 @@
 
 #include"LCGrid.h"
 #include "../pedestrian/Pedestrian.h"
-
+#include "../geometry/Building.h"
 
 using namespace std;
 
 
 LCGrid::LCGrid(double boundaries[4], double cellsize, int nPeds)
 {
-
      pGrid_xmin=boundaries[0];
      pGrid_xmax=boundaries[1];
      pGrid_ymin=boundaries[2];
@@ -51,7 +50,7 @@ LCGrid::LCGrid(double boundaries[4], double cellsize, int nPeds)
      pCellSize=cellsize;
      pNpeds=nPeds;
 
-     // add 1 to ensure that the whole area is covered by cells if not divisable without remainder
+     // add 1 to ensure that the whole area is covered by cells if not divisible without remainder
      pGridSizeX = (int) ((pGrid_xmax - pGrid_xmin) / pCellSize) + 1 + 2; // 1 dummy cell on each side
      pGridSizeY = (int) ((pGrid_ymax - pGrid_ymin) / pCellSize) + 1 + 2; // 1 dummy cell on each side
 
@@ -122,7 +121,6 @@ void LCGrid::Update(const vector<Pedestrian*>& peds)
 // I hope you had called Clear() first
 void LCGrid::Update(Pedestrian* ped)
 {
-
      int id=ped->GetID()-1;
      // determine the cell coordinates of pedestrian i
      int ix = (int) ((ped->GetPos().GetX() - pGrid_xmin) / pCellSize) + 1; // +1 because of dummy cells
@@ -145,39 +143,29 @@ void LCGrid::ClearGrid()
           }
      }
 
-     for(int i=0; i<pNpeds; i++) pList[i]=LIST_EMPTY;
+     for(int i=0; i<pNpeds; i++) {
+          pList[i]=LIST_EMPTY;
+          pLocalPedsCopy[i]=NULL;
+     }
 }
 
-void LCGrid::GetNeighbourhood(const Pedestrian* ped, Pedestrian** neighbourhood, int* nSize)
+void LCGrid::HighlightNeighborhood(int pedID, Building* building)
 {
+     // force spotlight activation
+     Pedestrian::SetColorMode(BY_SPOTLIGHT);
+     //darken all
+     const vector< Pedestrian* >& allPeds = building->GetAllPedestrians();
+     for(unsigned int p=0;p<allPeds.size();p++){
+          allPeds[p]->SetSpotlight(false);
+     }
 
-     double xPed=ped->GetPos().GetX();
-     double yPed=ped->GetPos().GetY();
-
-
-     int l = (int) ((xPed - pGrid_xmin) / pCellSize) + 1; // +1 because of dummy cells
-     int k = (int) ((yPed - pGrid_ymin) / pCellSize) + 1;
-
-     //-1 to get  correct mapping in the array local
-     int myID=ped->GetID()-1;
-
-     *nSize=0;
-     // all neighbor cells
-     for (int i = l - 1; i <= l + 1; ++i) {
-          for (int j = k - 1; j <= k + 1; ++j) {
-               //printf(" i=%d j=%d k=%d l=%d\n",i,j,nx,ny);
-               int p = pCellHead[j][i];
-               // all peds in one cell
-               while (p != LIST_EMPTY) {
-                    double x=pLocalPedsCopy[p]->GetPos().GetX();
-                    double y=pLocalPedsCopy[p]->GetPos().GetY();
-                    double dist=((x-xPed)*(x-xPed) + (y-yPed)*(y-yPed));
-                    if((dist<pCellSize*pCellSize) && (p!=myID)) {
-                         neighbourhood[(*nSize)++]=pLocalPedsCopy[p];
-                    }
-                    // next ped
-                    p = pList[p];
-               }
+     Pedestrian* ped=building->GetPedestrian(pedID);
+     //get and highlight the neighborhood
+     if(ped){
+          vector<Pedestrian*> neighbours;
+          GetNeighbourhood(ped,neighbours);
+          for(unsigned int p=0;p<neighbours.size();p++){
+               neighbours[p]->SetSpotlight(true);
           }
      }
 }
@@ -214,33 +202,10 @@ void LCGrid::GetNeighbourhood(const Pedestrian* ped, vector<Pedestrian*>& neighb
           }
      }
 }
-void LCGrid::GetNeighbourhood(const Point& pt, vector<Pedestrian*>& neighbourhood)
+
+double LCGrid::GetCellSize()
 {
-     double xPed=pt.GetX();
-     double yPed=pt.GetY();
-
-
-     int l = (int) ((xPed - pGrid_xmin) / pCellSize) + 1; // +1 because of dummy cells
-     int k = (int) ((yPed - pGrid_ymin) / pCellSize) + 1;
-
-     // all neighbor cells
-     for (int i = l - 1; i <= l + 1; ++i) {
-          for (int j = k - 1; j <= k + 1; ++j) {
-               //printf(" i=%d j=%d k=%d l=%d\n",i,j,nx,ny);
-               int p = pCellHead[j][i];
-               // all peds in one cell
-               while (p != LIST_EMPTY) {
-                    double x=pLocalPedsCopy[p]->GetPos().GetX();
-                    double y=pLocalPedsCopy[p]->GetPos().GetY();
-                    double dist=((x-xPed)*(x-xPed) + (y-yPed)*(y-yPed));
-                    if((dist<pCellSize*pCellSize)) {
-                         neighbourhood.push_back(pLocalPedsCopy[p]);
-                    }
-                    // next ped
-                    p = pList[p];
-               }
-          }
-     }
+    return pCellSize;
 }
 
 
@@ -296,4 +261,55 @@ void LCGrid::dumpCellsOnly()
                printf("}\n");
           }
      }
+}
+
+std::string LCGrid::ToXML()
+{
+     string grid;
+     for (double x=pGrid_xmin;x<=pGrid_xmax;x+=pCellSize)
+     {
+          char wall[500] = "";
+          grid.append("\t\t<wall>\n");
+          sprintf(wall, "\t\t\t<point xPos=\"%.2f\" yPos=\"%.2f\"/>\n",x*FAKTOR, pGrid_ymin * FAKTOR);
+          grid.append(wall);
+          sprintf(wall, "\t\t\t<point xPos=\"%.2f\" yPos=\"%.2f\"/>\n",x*FAKTOR, pGrid_ymax * FAKTOR);
+          grid.append(wall);
+          grid.append("\t\t</wall>\n");
+     }
+     for (double y=pGrid_ymin;y<=pGrid_ymax;y+=pCellSize)
+     {
+          char wall[500] = "";
+          grid.append("\t\t<wall>\n");
+          sprintf(wall, "\t\t\t<point xPos=\"%.2f\" yPos=\"%.2f\"/>\n",pGrid_xmin*FAKTOR, y * FAKTOR);
+          grid.append(wall);
+          sprintf(wall, "\t\t\t<point xPos=\"%.2f\" yPos=\"%.2f\"/>\n",pGrid_xmax*FAKTOR, y * FAKTOR);
+          grid.append(wall);
+          grid.append("\t\t</wall>\n");
+     }
+
+
+     //     for (int a=0;a<pGridSizeX;a++)
+     //     {
+     //          double x= pGrid_xmin +a*pCellSize;
+     //          char wall[500] = "";
+     //          grid.append("\t\t<wall>\n");
+     //          sprintf(wall, "\t\t\t<point xPos=\"%.2f\" yPos=\"%.2f\"/>\n",x*FAKTOR, pGrid_ymin * FAKTOR);
+     //          grid.append(wall);
+     //          sprintf(wall, "\t\t\t<point xPos=\"%.2f\" yPos=\"%.2f\"/>\n",x*FAKTOR, pGrid_ymax * FAKTOR);
+     //          grid.append(wall);
+     //          grid.append("\t\t</wall>\n");
+     //     }
+     //
+     //     for (int a=0;a<pGridSizeY;a++)
+     //     {
+     //          double y=pGrid_ymin +a*pCellSize;
+     //          char wall[500] = "";
+     //          grid.append("\t\t<wall>\n");
+     //          sprintf(wall, "\t\t\t<point xPos=\"%.2f\" yPos=\"%.2f\"/>\n",pGrid_xmin*FAKTOR, y * FAKTOR);
+     //          grid.append(wall);
+     //          sprintf(wall, "\t\t\t<point xPos=\"%.2f\" yPos=\"%.2f\"/>\n",pGrid_xmax*FAKTOR, y * FAKTOR);
+     //          grid.append(wall);
+     //          grid.append("\t\t</wall>\n");
+     //     }
+     return grid;
 }

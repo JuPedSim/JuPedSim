@@ -1,7 +1,7 @@
 /**
  * \file        Router.h
  * \date        Nov 11, 2010
- * \version     v0.5
+ * \version     v0.6
  * \copyright   <2009-2014> Forschungszentrum Jülich GmbH. All rights reserved.
  *
  * \section License
@@ -41,7 +41,7 @@ class Pedestrian;
 class Router {
 
 private:
-     /// routing strategy as defined in the Macros.h file
+     /// routing strategy ID as defined in the Macros.h file
      RoutingStrategy _strategy;
 
      /// the id as present in the persons.xml file
@@ -56,8 +56,16 @@ protected:
      std::vector<int> _finalDestinations;
 
 public:
-     Router();
 
+     /**
+      * Constructor
+      */
+     Router();
+     Router(int id, RoutingStrategy s);
+
+     /**
+      * Destructor
+      */
      virtual ~Router();
 
      /**
@@ -72,9 +80,7 @@ public:
       */
      void AddFinalDestinationID(int id);
 
-
      /**
-      * TODO: investigate Trip for compatibility with ID starting with 0 or 1.
       * @return a vector containing the IDs of the intermediate destinations
       */
      const std::vector<int> GetTrip(int id) const;
@@ -107,11 +113,6 @@ public:
      RoutingStrategy GetStrategy() const;
 
      /**
-      * Debug output for this class
-      */
-     void WriteToErrorLog() const;
-
-     /**
       * Find the next suitable target for Pedestrian p
       * @param p the Pedestrian
       * @return -1 in the case no destination could be found
@@ -123,8 +124,7 @@ public:
       * its Routing engine using the supplied building object.
       * @param b the building object
       */
-     virtual void Init(Building* b) = 0;
-
+     virtual bool Init(Building* b) = 0;
 
 };
 

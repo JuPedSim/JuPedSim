@@ -1,7 +1,7 @@
 /**
  * \file        CognitiveMapRouter.h
  * \date        Feb 1, 2014
- * \version     v0.5
+ * \version     v0.6
  * \copyright   <2009-2014> Forschungszentrum Jülich GmbH. All rights reserved.
  *
  * \section License
@@ -32,11 +32,13 @@
 
 #include "Router.h"
 #include <string>
+#include <unordered_map>
 
 class Building;
 class Router;
 class CognitiveMapStorage;
 class SensorManager;
+class NavLine;
 
 
 /**
@@ -45,21 +47,42 @@ class SensorManager;
  *
  */
 
+
+//c++11 alias: Container to store options for the router (i. a. sensors)
+using optStorage = std::unordered_map<std::string,std::vector<std::string>>;
+
 class CognitiveMapRouter: public Router {
 public:
      CognitiveMapRouter();
+     CognitiveMapRouter(int id, RoutingStrategy s);
      virtual ~CognitiveMapRouter();
 
+
      virtual int FindExit(Pedestrian* p);
-     virtual void Init(Building* b);
+     virtual bool Init(Building* b);
+
+     /**
+      * @return options involved in the routing algorithm
+      */
+     const optStorage &getOptions() const;
+
+     /**
+      * Adds further options (key,value) to the optionContainer
+      */
+     void addOption(const std::string &key, const std::vector<std::string> &value);
 
 protected:
-     void CheckAndInitPedestrian(Pedestrian *);
+
+    int FindDestination(Pedestrian * );
+
 private:
 
      Building * building;
      CognitiveMapStorage * cm_storage;
      SensorManager * sensor_manager;
+
+     /// Optional options which are supposed to be used
+     optStorage options;
 
 };
 

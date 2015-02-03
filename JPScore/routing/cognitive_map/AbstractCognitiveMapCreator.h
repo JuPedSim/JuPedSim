@@ -1,7 +1,7 @@
 /**
  * \file        AbstractCognitiveMapCreator.h
  * \date        Feb 1, 2014
- * \version     v0.5
+ * \version     v0.6
  * \copyright   <2009-2014> Forschungszentrum Jülich GmbH. All rights reserved.
  *
  * \section License
@@ -37,13 +37,13 @@ class CognitiveMap;
 
 class AbstractCognitiveMapCreator {
 public:
-     AbstractCognitiveMapCreator(const Building * b) : building(b) {}
+     AbstractCognitiveMapCreator(const Building * b) : _building(b) {}
 
 
      virtual ~AbstractCognitiveMapCreator();
      virtual CognitiveMap * CreateCognitiveMap(const Pedestrian * ped) = 0;
 protected:
-     const Building * const building;
+     const Building * const _building;
 };
 
 #endif // ABSTRACTCOGNITIVEMAPCREATOR_H

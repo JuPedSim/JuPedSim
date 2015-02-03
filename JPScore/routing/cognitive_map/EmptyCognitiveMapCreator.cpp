@@ -1,7 +1,7 @@
 /**
  * \file        EmptyCognitiveMapCreator.cpp
  * \date        Feb 1, 2014
- * \version     v0.5
+ * \version     v0.6
  * \copyright   <2009-2014> Forschungszentrum Jülich GmbH. All rights reserved.
  *
  * \section License
@@ -43,7 +43,7 @@ EmptyCognitiveMapCreator::~EmptyCognitiveMapCreator()
 
 CognitiveMap * EmptyCognitiveMapCreator::CreateCognitiveMap(const Pedestrian * ped)
 {
-     CognitiveMap * cm = new CognitiveMap(building, ped);
+     CognitiveMap * cm = new CognitiveMap(_building, ped);
 
      return cm;
 }

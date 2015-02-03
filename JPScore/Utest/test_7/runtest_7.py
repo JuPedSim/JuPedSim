@@ -28,7 +28,7 @@ DIR = os.path.dirname(os.path.realpath(argv[0]))
 #--------------------------------------------------------
 def PassedLineX(p, exit):
     """
-    check if pedestrian (given by matrix p) passed the line x, [y1, y2] y1<y2
+    check if pedestrian (given by matrix p) passed the vertical line x, [y1, y2] y1<y2
     """
     x = exit[0]
     y1 = exit[1]
@@ -36,7 +36,7 @@ def PassedLineX(p, exit):
     return any(p[:,2] <= x) & any(p[:,2] >= x) & any(p[:,3] >= y1) & any(p[:,3] <= y2)
 def PassedLineY(p, exit):
     """
-    check if pedestrian (given by matrix p) passed the line y, [x1, x2] x1<x2
+    check if pedestrian (given by matrix p) passed the horizontal line y, [x1, x2] x1<x2
     """
     y = exit[0]
     x1 = exit[1]
@@ -91,14 +91,14 @@ if __name__ == "__main__":
         logging.info('end simulation ...\n--------------\n')
         trajfile = "trajectories/traj" + inifile.split("ini")[2]
         logging.info('trajfile = <%s>'%trajfile)
-        #--------------------- PARSING & FLOW-MEASUREMENT --------
+        #--------------------- PARSING & TEST LOGIC --------
         if not path.exists(trajfile):
             logging.critical("trajfile <%s> does not exist"%trajfile)
             exit(FAILURE)
   
         fps, N, traj = parse_file(trajfile)
-        group_1 = [1,2,3]
-        group_2 = [4,6,5]
+        group_1 = [1, 2, 3]
+        group_2 = [4, 6, 5]
         e1 = [26, 1, 2] # y, x1, x2
         e2 = [18, 1, 2] # x, y1, y2
         for ped in group_1:
@@ -106,24 +106,27 @@ if __name__ == "__main__":
             x = traj1[:,2]
             y = traj1[:,3]
             if not PassedLineY(traj1, e1):
-                logging.critical("ped %d did not exit from exit1 y = %d"%(ped, e1[0]))
+                logging.critical("ped %d did not exit from Exit (%1.2f, %1.2f) | (%1.2f, %1.2f)"%(ped, e1[1], e1[0], e1[2], e1[0]))
                 failure = 1
             else:
-                logging.info("ped %d  exits from exit1 y = %d"%(ped, e1[0]))
+                logging.info("ped %d  exits from Exit (%1.2f, %1.2f) | (%1.2f, %1.2f)"%(ped, e1[1], e1[0], e1[2], e1[0]))
 
         for ped in group_2:
             traj1 = traj[ traj[:,0] == ped ]
             x = traj1[:,2]
             y = traj1[:,3]
             if not PassedLineX(traj1, e2):
-                logging.critical("ped %d did not exit from exit1 y = %d"%(ped, e2[0]))
+                logging.critical("ped %d did not exit from Exit (%1.2f, %1.2f) | (%1.2f, %1.2f)"%(ped, e2[0], e2[1], e2[0], e2[2]))
                 failure = 1
             else:
-                logging.info("ped %d  exits from exit1 y = %d"%(ped, e2[0]))
+                logging.info("ped %d  exits from Exit (%1.2f, %1.2f) | (%1.2f, %1.2f)"%(ped, e2[0], e2[1], e2[0], e2[2]))
 
          
-    if failure:
-        exit(FAILURE)
-    else:
-        exit(SUCCESS)
+        if failure:
+            logging.critical("%s exists with failure!"%argv[0]) 
+            exit(FAILURE)
+
+#----- for inifiles    
+    logging.info("%s exists with success!"%argv[0]) 
+    exit(SUCCESS)
 

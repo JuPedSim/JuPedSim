@@ -1,7 +1,7 @@
 /**
  * \file        OutputHandler.h
  * \date        Nov 20, 2010
- * \version     v0.5
+ * \version     v0.6
  * \copyright   <2009-2014> Forschungszentrum Jülich GmbH. All rights reserved.
  *
  * \section License
@@ -33,9 +33,12 @@
 #include <fstream>
 #include <vector>
 
-
-#include "../IO/TraVisToClient.h"
 #include "../general/Macros.h"
+
+#ifdef _SIMULATOR
+#include "../IO/TraVisToClient.h"
+#endif
+
 
 class OutputHandler {
 protected:
@@ -51,13 +54,13 @@ public:
      void incrementErrors();
      void ProgressBar(double TotalPeds, double NowPeds);
 
-     virtual void Write(std::string str);
+     virtual void Write(const std::string& str);
      virtual void Write(const char *string, ...);
 };
 
 class STDIOHandler : public OutputHandler {
 public:
-     void Write(std::string str);
+     void Write(const std::string& str);
 };
 
 class FileHandler : public OutputHandler {
@@ -66,22 +69,25 @@ private:
 public:
      FileHandler(const char *fn);
      virtual ~FileHandler();
-     void Write(std::string str);
+     void Write(const std::string& str);
      void Write(const char *string,...);
 };
+
+#ifdef _SIMULATOR
 
 class SocketHandler : public OutputHandler {
 private:
      TraVisToClient* client;
 
 public:
-     SocketHandler(std::string host, int port);
+     SocketHandler(const std::string& host, int port);
      virtual ~SocketHandler();
-     void Write(std::string str);
+     void Write(const std::string& str);
 
      //Some tags are broken
      std::vector<std::string> brokentags;
 };
 
+#endif
 
 #endif /*OUTPUT_HANDLER_H_*/

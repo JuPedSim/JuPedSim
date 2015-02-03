@@ -1,7 +1,7 @@
 /**
  * \file        GraphEdge.h
  * \date        Jan 1, 2014
- * \version     v0.5
+ * \version     v0.6
  * \copyright   <2009-2014> Forschungszentrum Jülich GmbH. All rights reserved.
  *
  * \section License
@@ -45,7 +45,7 @@ class Crossing;
 class GraphEdge {
 
 public:
-     typedef std::map<std::string, std::pair<double, double>> FactorContainer;
+     typedef std::map<std::string, std::pair<double, double> > FactorContainer;
 
      /****************************
       * Constructors & Destructors
@@ -71,6 +71,8 @@ public:
 
      double GetRoomToFloorFactor() const;
 
+    double GetFactor() const;
+    double GetFactorWithDistance(double distance) const;
 
      double GetWeight(const Point &) const;
 

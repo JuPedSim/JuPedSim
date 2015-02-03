@@ -1,7 +1,7 @@
 /**
  * \file        GompertzModel.h
  * \date        Apr 15, 2014
- * \version     v0.5
+ * \version     v0.6
  * \copyright   <2009-2014> Forschungszentrum Jülich GmbH. All rights reserved.
  *
  * \section License
@@ -35,8 +35,7 @@
 #include <vector>
 
 #include "../geometry/Building.h"
-#include "ForceModel.h"
-
+#include "OperationalModel.h"
 
 
 //forward declaration
@@ -44,7 +43,7 @@ class Pedestrian;
 class DirectionStrategy;
 
 
-class GompertzModel : public ForceModel {
+class GompertzModel : public OperationalModel {
 private:
      /// define the strategy for crossing a door (used for calculating the driving force)
      DirectionStrategy* _direction;
@@ -107,30 +106,30 @@ public:
      virtual ~GompertzModel(void);
 
      DirectionStrategy* GetDirection() const;
+
      /**
       * Get the parameter for the strength of the ped-PED repulsive force
-      *
       *
       * @return double
       */
      double GetNuPed() const;
+
      /**
       * ToDO: What is this parameter doing?
-      *
       *
       * @return double
       */
      double GetaPed() const;
+
      /**
       * ToDO: What is this parameter doing?
-      *
       *
       * @return double
       */
      double GetbPed() const;
+
      /**
       * ToDO: What is this parameter doing?
-      *
       *
       * @return double
       */
@@ -139,50 +138,50 @@ public:
      /**
       * Get the parameter for the strength of the ped-WALL repulsive force
       *
-      *
       * @return
       */
      double GetNuWall() const;
+
      /**
       * ToDO: What is this parameter doing?
-      *
       *
       * @return double
       */
      double GetaWall() const;
+
      /**
       * ToDO: What is this parameter doing?
-      *
       *
       * @return double
       */
      double GetbWall() const;
+
      /**
       * ToDO: What is this parameter doing?
-      *
       *
       * @return double
       */
      double GetcWall() const;
 
      /**
-      * Get the parameter for the strength of the ped-WALL repulsive force
-      *
-      * @return
-      */
-
-
-     /**
-      * Solve the differential equations and update the positions and velocities
-      * @param t the actual time
-      * @param tp the next timestep
-      * @param building the geometry object
-      */
-     virtual void CalculateForce(double t, double tp, Building* building) const;
-     /**
       * @return all model parameters in a nicely formatted string
       */
-     virtual std::string writeParameter() const;
+     virtual std::string GetDescription() const;
+
+     /**
+      * initialize the phi angle
+      * @param building
+      */
+     virtual bool Init (Building* building) const;
+
+     /**
+      * Compute the next simulation step
+      * Solve the differential equations and update the positions and velocities
+      * @param current the actual time
+      * @param deltaT the next timestep
+      * @param building the geometry object
+      */
+     virtual void ComputeNextTimeStep(double current, double deltaT, Building* building) const;
 };
 
 

@@ -1,8 +1,8 @@
 /**
  * \file        LCGrid.h
  * \date        Nov 16, 2010
- * \version     v0.5
- * \copyright   <2009-2014> Forschungszentrum Jülich GmbH. All rights reserved.
+ * \version     v0.6
+ * \copyright   <2009-2014> Forschungszentrum J?lich GmbH. All rights reserved.
  *
  * \section License
  * This file is part of JuPedSim.
@@ -37,10 +37,12 @@
 #define LCGRID_H_
 
 #include <vector>
+#include <string>
 #include "../geometry/Point.h"
 
 //forwarded classes
 class Pedestrian;
+class Building;
 
 
 class LCGrid {
@@ -67,8 +69,6 @@ private:
 
 
 public:
-
-
      /**
       * Constructor
       * @param boundaries the boundaries of the grid [xmin xmax ymin ymax]
@@ -83,10 +83,10 @@ public:
      ~LCGrid();
 
      /**
-      *Update the cells occupation
+      *Get pCellSize
       */
+     double GetCellSize();
 
-     void Update(Pedestrian** peds);
      /**
       *Update the cells occupation
       */
@@ -118,15 +118,6 @@ public:
      void dumpCellsOnly();
 
      /**
-      * Return a vector containing the neighbourhood of the pedestrians ped
-      * @param ped the considered pedestrian
-      * @param neighborhood an array containing the pedestrians
-      * @param nSize the number of returned pedestrians
-      */
-     void GetNeighbourhood(const Pedestrian* ped, Pedestrian** neighborhood, int* nSize);
-
-
-     /**
       * Return the pedestrians in the neighborhood of a specific location
       * @param position
       * @param neighbourhood
@@ -139,6 +130,17 @@ public:
       * @param neighbourhood
       */
      void GetNeighbourhood(const Pedestrian* ped, std::vector<Pedestrian*>& neighbourhood);
+
+     /**
+      * Highlight the neighborhood of the given pedestrian
+      * @param pedID
+      */
+     void HighlightNeighborhood(int pedID, Building* building);
+
+     /**
+      * @return an xml representation of the grid, compatible with the geometry format
+      */
+     std::string ToXML();
 
 };
 

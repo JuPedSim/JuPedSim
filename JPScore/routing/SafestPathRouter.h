@@ -1,7 +1,7 @@
 /**
  * \file        SafestPathRouter.h
  * \date        Nov 29, 2013
- * \version     v0.5
+ * \version     v0.6
  * \copyright   <2009-2014> Forschungszentrum Jülich GmbH. All rights reserved.
  *
  * \section License
@@ -35,6 +35,7 @@
 class SafestPathRouter: public GlobalRouter {
 public:
      SafestPathRouter();
+     SafestPathRouter(int id, RoutingStrategy s);
      virtual ~SafestPathRouter();
 
      /**
@@ -46,8 +47,7 @@ public:
       * Load the fds simulation file and preprocess the input,
       * before calling the Init from the Global RouterEngine
       */
-     virtual void Init(Building* building);
-
+     virtual bool Init(Building* building);
 
      /**
       * Bypass using
