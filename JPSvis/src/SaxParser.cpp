@@ -38,6 +38,8 @@
 #include "geometry/FacilityGeometry.h"
 #include "geometry/Building.h"
 #include "geometry/Wall.h"
+#include "geometry/SubRoom.h"
+
 #include "SystemSettings.h"
 
 #include <QMessageBox>
@@ -306,7 +308,28 @@ bool SaxParser::startElement(const QString & /* namespaceURI */,
             }
         }
 
-    } else if (qName == "timeFirstFrame") {
+    }else if (qName == "hline") {
+        parsingWalls=false;
+        parsingCrossings=true;
+        thickness=15;
+        height=250;
+        color=255;
+        caption="";
+
+        for(int i=0; i<at.length(); i++) {
+            if(at.localName(i)=="thickness") {
+                thickness=at.value(i).toDouble()*FAKTOR;
+            } else if(at.localName(i)=="height") {
+                height=at.value(i).toDouble()*FAKTOR;
+            } else if(at.localName(i)=="color") {
+                color=at.value(i).toDouble();
+            } else if(at.localName(i)=="caption") {
+                caption=at.value(i);
+            }
+        }
+
+    }
+    else if (qName == "timeFirstFrame") {
         unsigned long timeFirstFrame_us=0;
         unsigned long timeFirstFrame_s=0;
 
@@ -399,9 +422,9 @@ bool SaxParser::startElement(const QString & /* namespaceURI */,
         }
 
         //coordinates of the ellipse, default to the head of the agent
-        if(isnan(el_x)) el_x=xPos;
-        if(isnan(el_y)) el_y=yPos;
-        if(isnan(el_z)) el_z=zPos;
+        if(std::isnan(el_x)) el_x=xPos;
+        if(std::isnan(el_y)) el_y=yPos;
+        if(std::isnan(el_z)) el_z=zPos;
 
         //double pos[3]={xPos,yPos,zPos};
         //double vel[3]={xVel,yPos,zPos};
@@ -435,13 +458,13 @@ bool SaxParser::startElement(const QString & /* namespaceURI */,
                 color=at.value(i).toDouble();
             }
         }
-        if(isnan(id)) return true;
+        if(std::isnan(id)) return true;
 
-        if(!isnan(height)) {
+        if(!std::isnan(height)) {
             initialPedestriansHeights.append(QString::number(id));
             initialPedestriansHeights.append(QString::number(height));
         }
-        if(!isnan(color)) {
+        if(!std::isnan(color)) {
             initialPedestriansColors.append(QString::number(id));
             initialPedestriansColors.append(QString::number(color));
         }
@@ -553,7 +576,6 @@ void SaxParser::clearPoints()
 /// provided for convenience and will be removed in the next version
 bool SaxParser::parseGeometryJPS(QString fileName, FacilityGeometry *geometry)
 {
-
     double captionsColor=0;//red
     if(!fileName.endsWith(".xml",Qt::CaseInsensitive)) return false;
     QString wd;
@@ -564,16 +586,20 @@ bool SaxParser::parseGeometryJPS(QString fileName, FacilityGeometry *geometry)
     string geometrypath = fileName.toStdString();
 
     // read the geometry
-    if(!building->LoadBuildingFromFile(geometrypath))
+    if(!building->LoadGeometry(geometrypath))
         return false;
     if(!building->InitGeometry())
         return false; // create the polygons
 
-    int currentID=0;
+    int currentFloorPolyID=0;
+    int currentObstPolyID=0;
+
     // Setup the points
-    VTK_CREATE(vtkPoints,points);
+    VTK_CREATE(vtkPoints,floor_points);
+    VTK_CREATE(vtkPoints,obstacles_points);
     // Add the polygon to a list of polygons
-    VTK_CREATE(vtkCellArray,polygons);
+    VTK_CREATE(vtkCellArray,floor_polygons);
+    VTK_CREATE(vtkCellArray,obstacles_polygons);
 
     for (int i = 0; i < building->GetNumberOfRooms(); i++) {
         Room* r = building->GetRoom(i);
@@ -583,7 +609,6 @@ bool SaxParser::parseGeometryJPS(QString fileName, FacilityGeometry *geometry)
             SubRoom* sub = r->GetSubRoom(k);
 
             vector<Point> poly = sub->GetPolygon();
-
             if(sub->IsClockwise()==true) {
                 std::reverse(poly.begin(),poly.end());
             }
@@ -593,13 +618,12 @@ bool SaxParser::parseGeometryJPS(QString fileName, FacilityGeometry *geometry)
             polygon->GetPointIds()->SetNumberOfIds(poly.size());
 
             for (unsigned int s=0; s<poly.size(); s++) {
-                points->InsertNextPoint(poly[s]._x*FAKTOR,poly[s]._y*FAKTOR,sub->GetElevation(poly[s])*FAKTOR);
-                polygon->GetPointIds()->SetId(s, currentID++);
+                floor_points->InsertNextPoint(poly[s]._x*FAKTOR,poly[s]._y*FAKTOR,sub->GetElevation(poly[s])*FAKTOR);
+                polygon->GetPointIds()->SetId(s, currentFloorPolyID++);
             }
-            polygons->InsertNextCell(polygon);
+            floor_polygons->InsertNextCell(polygon);
 
             //plot the walls only for not stairs
-
             const vector<Wall>& walls= sub->GetAllWalls();
             for(unsigned int w=0; w<walls.size(); w++) {
                 Point p1 = walls[w].GetPoint1();
@@ -622,13 +646,12 @@ bool SaxParser::parseGeometryJPS(QString fileName, FacilityGeometry *geometry)
             geometry->addObjectLabel(pos,pos,caption,captionsColor);
 
             //plot the obstacles
-            const vector<Obstacle*>& obstacles = sub->GetAllObstacles();
-            for( unsigned int j=0; j<obstacles.size(); j++) {
-                Obstacle* obst= obstacles[j];
-                const vector<Wall>& walls= obst->GetAllWalls();
-                for(unsigned int w=0; w<walls.size(); w++) {
-                    Point p1 = walls[w].GetPoint1();
-                    Point p2 = walls[w].GetPoint2();
+            for(auto obst:sub->GetAllObstacles())
+            {
+                for(auto wall: obst->GetAllWalls())
+                {
+                    Point p1 = wall.GetPoint1();
+                    Point p2 = wall.GetPoint2();
                     double z1= sub->GetElevation(p1);
                     double z2= sub->GetElevation(p2);
                     geometry->addWall(p1._x*FAKTOR, p1._y*FAKTOR, z1*FAKTOR, p2._x*FAKTOR, p2._y*FAKTOR,z2*FAKTOR);
@@ -638,15 +661,38 @@ bool SaxParser::parseGeometryJPS(QString fileName, FacilityGeometry *geometry)
                 double z= sub->GetElevation(p);
                 double pos[3]= {p._x*FAKTOR,p._y*FAKTOR,z*FAKTOR};
                 geometry->addObjectLabel(pos,pos,obst->GetCaption(),captionsColor);
+
+                //add a special texture to the obstacles
+                auto poly = obst->GetPolygon();
+                //if(obst->IsClockwise()==true) {
+                //  std::reverse(poly.begin(),poly.end());
+                //}
+
+                // Create the polygon
+                VTK_CREATE(vtkPolygon,polygon);
+                polygon->GetPointIds()->SetNumberOfIds(poly.size());
+
+                for (unsigned int s=0; s<poly.size(); s++) {
+                    obstacles_points->InsertNextPoint(poly[s]._x*FAKTOR,poly[s]._y*FAKTOR,sub->GetElevation(poly[s])*FAKTOR);
+                    polygon->GetPointIds()->SetId(s, currentObstPolyID++);
+                }
+                obstacles_polygons->InsertNextCell(polygon);
             }
         }
     }
 
     // Create a PolyData to represent the floor
-    VTK_CREATE(vtkPolyData, polygonPolyData);
-    polygonPolyData->SetPoints(points);
-    polygonPolyData->SetPolys(polygons);
-    geometry->addFloor(polygonPolyData);
+    VTK_CREATE(vtkPolyData, floorPolygonPolyData);
+    floorPolygonPolyData->SetPoints(floor_points);
+    floorPolygonPolyData->SetPolys(floor_polygons);
+    geometry->addFloor(floorPolygonPolyData);
+
+    // Create a PolyData to represen the obstacles
+    //TODO:
+    VTK_CREATE(vtkPolyData, obstPolygonPolyData);
+    obstPolygonPolyData->SetPoints(obstacles_points);
+    obstPolygonPolyData->SetPolys(obstacles_polygons);
+    geometry->addObstacles(obstPolygonPolyData);
 
 
     // add the crossings

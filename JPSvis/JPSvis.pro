@@ -1,7 +1,8 @@
 TEMPLATE = app
-TARGET = TraVisTo
+TARGET = JPSvis
 CONFIG += qt
 CONFIG += static
+CONFIG += c++11
 QT += xml network
 
 #avoid some annoying dependencies
@@ -11,7 +12,8 @@ QT += xml network
 #QMAKE_CXXFLAGS += -static
 #QMAKE_LFLAGS_RELEASE += -static-libgcc
 
-QMAKE_CXXFLAGS += -Wno-deprecated -Wno-unused-parameter -Wno-unused-variable
+QMAKE_CXXFLAGS += -std=c++11
+QMAKE_CXXFLAGS += -Wno-deprecated -Wno-unused-parameter -Wno-unused-variable -Wno-sign-compare
 
 greaterThan(QT_MAJOR_VERSION, 4):QT += widgets
 
@@ -364,59 +366,74 @@ unix_6 {
             -lvtkzlib-6.0  \
 }
    
-#dynamic linking with vtk5.10
-unix_dyn {
+#dynamic linking with vtk5.8
+unix{
 INCLUDEPATH += /usr/include/vtk-5.8
 LIBS += -L/usr/lib \
--lvtkRendering  \
--lvtkCommon   \
--lvtkHybrid   \
--lvtkIO   \
--lvtkGraphics   \
--lvtkFiltering   \
-
+    -lvtkRendering  \
+    -lvtkCommon   \
+    -lvtkHybrid   \
+    -lvtkIO   \
+    -lvtkGraphics   \
+    -lvtkFiltering   \
+    -lvtkCommon   \
+    -lvtkverdict   \
+    -lvtkParallel   \
+    -lvtkexoIIc   \
+    -lvtkImaging   \
+    -lvtkDICOMParser   \
+    -lvtkmetaio   \
+    -lvtkftgl  \
+    -lvtkViews \
+    -lvtksys   \
+    #-lvtkpng \
+    #-lvtktiff \
+    #-lvtkjpeg \
+    #-lvtklibxml2 \
+    #-lvtkzlib \
+    #-lvtkexpat \
+    #-lvtkfreetype \
  }
  
 #Static compilation linux
-unix {
+unix_static {
 #INCLUDEPATH += /usr/include/vtk-5.8
 #LIBS += -L/usr/lib \
-INCLUDEPATH +=/usr/local/include/vtk-5.10
-LIBS += -L/usr/local/lib/vtk-5.10 \
--lvtkRendering  \
--lvtkCommon   \
--lvtkHybrid   \
--lvtkIO   \
--lvtkGraphics   \
--lvtkFiltering   \
--lvtkCommon   \
--lvtkverdict   \
--lvtkParallel   \
--lvtkexoIIc   \
--lvtkImaging   \
--lvtkDICOMParser   \
--lvtkmetaio   \
--lvtkftgl  \
--lLSDyna \ 
--lvtkViews \
--lvtksys   \
--lvtkpng \
--lvtktiff \
--lvtkjpeg \
--lvtklibxml2 \
--lvtkzlib \
--lvtkexpat \
--lvtkfreetype \
--lGL  \
--lXt \
--lX11 \
--lXext \
--ldl \
+    INCLUDEPATH +=/usr/local/include/vtk-5.10
+    LIBS += -L/usr/local/lib/vtk-5.10 \
+    -lvtkRendering  \
+    -lvtkCommon   \
+    -lvtkHybrid   \
+    -lvtkIO   \
+    -lvtkGraphics   \
+    -lvtkFiltering   \
+    -lvtkCommon   \
+    -lvtkverdict   \
+    -lvtkParallel   \
+    -lvtkexoIIc   \
+    -lvtkImaging   \
+    -lvtkDICOMParser   \
+    -lvtkmetaio   \
+    -lvtkftgl  \
+    -lLSDyna \
+    -lvtkViews \
+    -lvtksys   \
+    -lvtkpng \
+    -lvtktiff \
+    -lvtkjpeg \
+    -lvtklibxml2 \
+    -lvtkzlib \
+    -lvtkexpat \
+    -lvtkfreetype \
+    -lGL  \
+    -lXt \
+    -lX11 \
+    -lXext \
+    -ldl \
  }
 
-macx {
+macx{
         INCLUDEPATH += /Users/piccolo/VTK/include/vtk-6.1
-
         LIBS += -L/Users/piccolo/VTK/lib \
             -lvtkalglib-6.1  \
             -lvtkChartsCore-6.1  \

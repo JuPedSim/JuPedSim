@@ -1,5 +1,5 @@
 /**
- * @file travisto.cpp
+ * @file MainWindow.cpp
  * @author   Ulrich Kemloh <kemlohulrich@gmail.com>
  * @version 0.1
  * Copyright (C) <2009-2010>
@@ -82,7 +82,7 @@ MainWindow::MainWindow(QWidget *parent) :
     setWindowFlags( Qt::Window | Qt::WindowMinimizeButtonHint | Qt::WindowCloseButtonHint);
 
     //used for saving the settings in a persistant way
-    QCoreApplication::setOrganizationName("Forschungszentrum Juelich GmbH");
+    QCoreApplication::setOrganizationName("Forschungszentrum_Juelich_GmbH");
     QCoreApplication::setOrganizationDomain("jupedsim.org");
     QCoreApplication::setApplicationName("jupedsim");
 
@@ -275,7 +275,7 @@ void MainWindow::slotHelpAbout()
     QMessageBox::about(
         this,
         "About JPSVis",
-        "Version 0.5 built with  QT 4.8 and VTK 5.10\n\n"
+        "Version 0.6-alpha built with  QT 4.8 and VTK 5.10\n\n"
         "JPSVis is part of the Juelich Pedestrian Simulator (JuPdsim)"
         "and stands for Trajectories Visualisation Tool. It is a tool for visualizing pedestrians motion\n"
         "developped at the Forschungszentrum Juelich GmbH, Germany\n\n"
@@ -306,7 +306,6 @@ void MainWindow::slotStartPlaying()
     //first reset this variable. just for the case
     // the thread was shutdown from the reset option
     extern_shutdown_visual_thread = false;
-
 
     if (!isPlaying) {
         statusBar()->showMessage(QString::fromUtf8("waiting for data"));
@@ -367,7 +366,6 @@ void MainWindow::slotStartPlaying()
 
     //no matter what, the stop button should be enabled
     ui.BtStop->setEnabled(true);
-
 }
 
 void MainWindow::slotStopPlaying()
@@ -492,7 +490,10 @@ FacilityGeometry* MainWindow::parseGeometry(QString geometryString)
 
     FacilityGeometry* geometry = visualisationThread->getGeometry();
 
+
+
     if(!geofileName.isEmpty()) {
+        SystemSettings::CreateLogfile();
         if (geofileName.endsWith(".xml",Qt::CaseInsensitive)) {
             //parsing the file
             if(!SaxParser::parseGeometryJPS(geofileName,geometry)) {
@@ -502,6 +503,7 @@ FacilityGeometry* MainWindow::parseGeometry(QString geometryString)
             //must not be a file name
             SaxParser::parseGeometryTRAV(geofileName,geometry);
         }
+        SystemSettings::DeleteLogfile();
     }
     // I assume it is a trav format node,
     //which is the only one which can directly be inserted into a file
@@ -540,11 +542,11 @@ bool MainWindow::parsePedestrianShapes(QDomNode shapeNode, int groupID)
         if(!ok)color=std::numeric_limits<int>::quiet_NaN();
         Debug::Messages("id= %d height= %lf color =%d",id,height,color);
 
-        if(!isnan(height)) {
+        if(height!=height) {
             heights.append(QString::number(id));
             heights.append(QString::number(height));
         }
-        if(!isnan(color)) {
+        if(color!=color) {
             colors.append(QString::number(id));
             colors.append(QString::number(color));
         }
@@ -959,7 +961,6 @@ void MainWindow::slotControlSequence(const char * sex)
 
 void MainWindow::resetGraphicalElements()
 {
-
     //restore play button
     QIcon icon1;
     icon1.addPixmap(QPixmap(
@@ -994,7 +995,7 @@ void MainWindow::resetGraphicalElements()
     ui.action3_D->setEnabled(true);
     ui.action2_D->setEnabled(true);
 
-    labelRecording->setText("rec: OFF");
+    labelRecording->setText("rec: off");
     statusBar()->showMessage(tr("select a File"));
 
     //resetting the start/stop recording action
@@ -1656,7 +1657,7 @@ void MainWindow::loadAllSettings()
 
     if (settings.contains("options/exitsColor"))
     {
-        QColor color = settings.value("options/bgColor").value<QColor>();
+        QColor color = settings.value("options/exitsColor").value<QColor>();
         SystemSettings::setExitsColor(color);
         qDebug()<<"Exits color: "<<color;
     }
@@ -1678,7 +1679,7 @@ void MainWindow::loadAllSettings()
     if (settings.contains("options/navLinesColor"))
     {
         QColor color = settings.value("options/navLinesColor").value<QColor>();
-        SystemSettings::setWallsColor(color);
+        SystemSettings::setNavLinesColor(color);
         qDebug()<<"Navlines color: "<<color;
     }
 
