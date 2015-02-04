@@ -1,5 +1,8 @@
-JPSreport v0.6 alpha
-====================
+JuPedSim v0.6
+==============
+
+Module JPSreport
+
 
 Running
 =======
@@ -10,3 +13,6 @@ From the command line trajectory files mentioned in the inifile will be analysed
 The output results will be saved in the sub-folder of the folder where the inifile exists.
 
 
+For more information please visit:
+https://github.com/JuPedSim/JuPedSim
+https://cst.version.fz-juelich.de/public
