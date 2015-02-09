@@ -291,7 +291,7 @@ set (   header_files
   math/ForceModel.h
   math/Mathematics.h
   math/ODESolver.h
-  math/GPU_GCFMModel.cpp
+  math/GPU_GCFMModel.h
   math/GCFMModel.h
   math/GompertzModel.h
   math/OperationalModel.h   
