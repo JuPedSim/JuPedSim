@@ -1,0 +1,3 @@
+[submodule "jpseditor"]
+	path = jpseditor
+	url = git@github.com:JuPedSim/jpseditor.git
