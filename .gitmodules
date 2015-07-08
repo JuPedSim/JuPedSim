@@ -1,3 +1,12 @@
 [submodule "jpseditor"]
 	path = jpseditor
 	url = git@github.com:JuPedSim/jpseditor.git
+[submodule "jpscore"]
+	path = jpscore
+	url = git@github.com:JuPedSim/jpscore.git
+[submodule "jpsreport"]
+	path = jpsreport
+	url = git@github.com:JuPedSim/jpsreport.git
+[submodule "jpsvis"]
+	path = jpsvis
+	url = git@github.com:JuPedSim/jpsvis.git
