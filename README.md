@@ -22,9 +22,11 @@ our [YouTube channel](https://www.youtube.com/user/JuPedSim).
 ### Building from sources
 ```shell
 git clone git@github.com:JuPedSim/JuPedSim.git
+cd JuPedSim
 git submodule update --init
 make -f Makefile.cmake
 ```
+The release binaries will be located in the bin folder.
 
 ### Frequently Asked Questions
 -------------------------------
