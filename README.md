@@ -12,7 +12,7 @@ model. It implements a couple of measurement methods including the [Voronoi-meth
 
 The code is *actively developed* in a [GitLab repository](https://cst.version.fz-juelich.de/public/projects). Please consider cloning the code there.  To be **notified** about releases and updates please follow us [@JuPedSim](https://twitter.com/JuPedSim).
 
-*JuPedSim is at the moment validated using the [RiMEA Testcases](www.rimea.de) Also it is stillundergoing an extensive unit-testing. Validation of the implemented models with respect to experimental data is planned, but only partially implemented.*
+*JuPedSim is at the moment validated using the [RiMEA Testcases](http://www.rimea.de) Also it is stillundergoing an extensive unit-testing. Validation of the implemented models with respect to experimental data is planned, but only partially implemented.*
 
 ### Showcase
 
@@ -40,7 +40,7 @@ The release binaries will be located in the bin folder.
  * Of course, the user's guide is found in the downloaded archive.
 
 4. Are the models validated ?
- * At the moment with the validation scenarios from [RiMEA](www.rimea.de)
+ * At the moment with the validation scenarios from [RiMEA](http://www.rimea.de)
  * We are actually setting up verification and validation tests. Some verification tests are included in this version but most of them will be available with the next version.
 
 5. How can I contribute to `JuPedSim`?
