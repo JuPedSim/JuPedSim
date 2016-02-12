@@ -1,71 +1,147 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
   <head>
-    <meta charset="utf-8">
+    <meta charset='utf-8'>
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <title>Jupedsim by JuPedSim</title>
-
-    <link rel="stylesheet" href="stylesheets/styles.css">
-    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
-    <script src="javascripts/scale.fix.js"></script>
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link href='https://fonts.googleapis.com/css?family=Architects+Daughter' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print">
 
     <!--[if lt IE 9]>
     <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
+
+    <title>Jupedsim by JuPedSim</title>
   </head>
+
   <body>
-    <div class="wrapper">
-      <header>
+    <header>
+      <div class="inner">
         <h1>Jupedsim</h1>
-        <p>Simulating pedestrians with state of the art models.</p>
-        <p class="view"><a href="https://github.com/JuPedSim/JuPedSim">View the Project on GitHub <small>JuPedSim/JuPedSim</small></a></p>
-        <ul>
-          <li><a href="https://github.com/JuPedSim/JuPedSim/zipball/master">Download <strong>ZIP File</strong></a></li>
-          <li><a href="https://github.com/JuPedSim/JuPedSim/tarball/master">Download <strong>TAR Ball</strong></a></li>
-          <li><a href="https://github.com/JuPedSim/JuPedSim">View On <strong>GitHub</strong></a></li>
-        </ul>
-      </header>
-      <section>
-        <h3>
-<a name="welcome-to-github-pages" class="anchor" href="#welcome-to-github-pages"><span class="octicon octicon-link"></span></a>Welcome to GitHub Pages.</h3>
+        <h2>Simulating pedestrians with state of the art models.</h2>
+        <a href="https://github.com/JuPedSim/JuPedSim" class="button"><small>View project on</small> GitHub</a>
+      </div>
+    </header>
 
-<p>This automatic page generator is the easiest way to create beautiful pages for all of your projects. Author your page content here using GitHub Flavored Markdown, select a template crafted by a designer, and publish. After your page is generated, you can check out the new branch:</p>
+    <div id="content-wrapper">
+      <div class="inner clearfix">
+        <section id="main-content">
+          <h3>
+<a id="jupedsim" class="anchor" href="#jupedsim" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>JuPedSim</h3>
 
-<pre><code>$ cd your_repo_root/repo_name
-$ git fetch origin
-$ git checkout gh-pages
-</code></pre>
+<hr>
 
-<p>If you're using the GitHub for Mac, simply sync your repository and you'll see the new branch.</p>
+<p>Simulating pedestrians with state of the art models.
+The Jülich Pedestrian Simulator (<a href="http://www.jupedsim.org">JuPedSim</a>) consists of three modules which are loosely
+coupled and can be used independently at the moment. These are:</p>
 
-<h3>
-<a name="designer-templates" class="anchor" href="#designer-templates"><span class="octicon octicon-link"></span></a>Designer Templates</h3>
+<ol>
+<li>
+<code>JPScore</code>: the core module computing the trajectories. At the moment a modification of the <a href="http://arxiv.org/abs/1008.4297">Generalized Centrifugal Force Model</a> is implemented. Another (yet unpublished) model is implemented.</li>
+<li>
+<code>JPSvis</code>: a tool for visualising the input (geometry) and output (trajectories) data.</li>
+<li>
+<code>JPSreport</code>: a tool for analysing the trajectories and validating the
+model. It implements a couple of measurement methods including the <a href="http://dx.doi.org/10.1016/j.physa.2009.12.015">Voronoi-method</a> for calculating the density.</li>
+<li> <code>JPSeditor</code>: a tool for creating and editing geometry files with dxf import/export capabilities.</li>
+</ol>
 
-<p>We've crafted some handsome templates for you to use. Go ahead and continue to layouts to browse through them. You can easily go back to edit your page before publishing. After publishing your page, you can revisit the page generator and switch to another theme. Your Page content will be preserved if it remained markdown format.</p>
+<p>The code is <em>actively developed</em> in a <a href="https://cst.version.fz-juelich.de/public/projects">GitLab repository</a>. Please consider cloning the code there.  To be <strong>notified</strong> about releases and updates please follow us <a href="https://twitter.com/JuPedSim">@JuPedSim</a>.</p>
 
-<h3>
-<a name="rather-drive-stick" class="anchor" href="#rather-drive-stick"><span class="octicon octicon-link"></span></a>Rather Drive Stick?</h3>
-
-<p>If you prefer to not use the automatic generator, push a branch named <code>gh-pages</code> to your repository to create a page manually. In addition to supporting regular HTML content, GitHub Pages support Jekyll, a simple, blog aware static site generator written by our own Tom Preston-Werner. Jekyll makes it easy to create site-wide headers and footers without having to copy them across every page. It also offers intelligent blog support and other advanced templating features.</p>
-
-<h3>
-<a name="authors-and-contributors" class="anchor" href="#authors-and-contributors"><span class="octicon octicon-link"></span></a>Authors and Contributors</h3>
-
-<p>You can <a href="https://github.com/blog/821" class="user-mention">@mention</a> a GitHub username to generate a link to their profile. The resulting <code>&lt;a&gt;</code> element will link to the contributor's GitHub Profile. For example: In 2007, Chris Wanstrath (<a href="https://github.com/defunkt" class="user-mention">@defunkt</a>), PJ Hyett (<a href="https://github.com/pjhyett" class="user-mention">@pjhyett</a>), and Tom Preston-Werner (<a href="https://github.com/mojombo" class="user-mention">@mojombo</a>) founded GitHub.</p>
+<p><em>JuPedSim is at the moment validated using the <a href="http://www.rimea.de">RiMEA Testcases</a> Also it is stillundergoing an extensive unit-testing. Validation of the implemented models with respect to experimental data is planned, but only partially implemented.</em></p>
 
 <h3>
-<a name="support-or-contact" class="anchor" href="#support-or-contact"><span class="octicon octicon-link"></span></a>Support or Contact</h3>
+<a id="showcase" class="anchor" href="#showcase" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Showcase</h3>
 
-<p>Having trouble with Pages? Check out the documentation at <a href="http://help.github.com/pages">http://help.github.com/pages</a> or contact <a href="mailto:support@github.com">support@github.com</a> and we’ll help you sort it out.</p>
-      </section>
+<p>To highlight some features of <code>JuPedSim</code> we have uploaded  some videos on
+our <a href="https://www.youtube.com/user/JuPedSim">YouTube channel</a>.</p>
+
+<h3>
+<a id="building-from-sources" class="anchor" href="#building-from-sources" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Building from sources</h3>
+
+<div class="highlight highlight-source-shell"><pre>git clone git@github.com:JuPedSim/JuPedSim.git
+<span class="pl-c1">cd</span> JuPedSim
+git submodule update --init
+make -f Makefile.cmake</pre></div>
+
+<p>The release binaries will be located in the bin folder.</p>
+
+<h3>
+<a id="frequently-asked-questions" class="anchor" href="#frequently-asked-questions" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Frequently Asked Questions</h3>
+
+<hr>
+
+<ol>
+<li>
+<p>What is the official page of <code>JuPedSim</code>?</p>
+
+<ul>
+<li>
+<a href="http://www.jupedsim.org">www.jupedsim.org</a> and the contact is <code>info at jupedsim.org</code>. You will find more information on the working group and other tools and experimental pedestrians data we have been collecting over the years.</li>
+</ul>
+</li>
+<li>
+<p>Where is the official repository ?</p>
+
+<ul>
+<li>
+<code>JuPedSim</code> is developed at the <a href="http://www.fz-juelich.de">Forschungszentrum Jülich</a> in Germany and the bleeding edge code is in their intern git <a href="http://cst.version.fz-juelich.de">repository</a>. At the moment only specific tags are pushed to GitHub.</li>
+</ul>
+</li>
+<li>
+<p>Is there a manual ?</p>
+
+<ul>
+<li>Of course, the user's guide is found in the downloaded archive.</li>
+</ul>
+</li>
+<li>
+<p>Are the models validated ?</p>
+
+<ul>
+<li>At the moment with the validation scenarios from <a href="http://www.rimea.de">RiMEA</a>
+</li>
+<li>We are actually setting up verification and validation tests. Some verification tests are included in this version but most of them will be available with the next version.</li>
+</ul>
+</li>
+<li>
+<p>How can I contribute to <code>JuPedSim</code>?</p>
+
+<ul>
+<li>Testing and reporting bugs will be great. If you want to contribute actively to the code, by implementing new models and/or features, you are welcome to do so. Please contact uns per mail at
+<code>info at jupedsim.org</code> so that we can grant you access to the repositories.</li>
+</ul>
+</li>
+<li>
+<p>And the License?</p>
+
+<ul>
+<li>JuPedSim itself is released under LGPL and the included librairies under their respective licenses of course.</li>
+</ul>
+</li>
+</ol>
+        </section>
+
+        <aside id="sidebar">
+          <a href="https://github.com/JuPedSim/JuPedSim/zipball/master" class="button">
+            <small>Download</small>
+            .zip file
+          </a>
+          <a href="https://github.com/JuPedSim/JuPedSim/tarball/master" class="button">
+            <small>Download</small>
+            .tar.gz file
+          </a>
+
+          <p class="repo-owner"><a href="https://github.com/JuPedSim/JuPedSim"></a> is maintained by <a href="https://github.com/JuPedSim">JuPedSim</a>.</p>
+
+          <p>This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the Architect theme by <a href="https://twitter.com/jasonlong">Jason Long</a>.</p>
+        </aside>
+      </div>
     </div>
-    <footer>
-      <p>Project maintained by <a href="https://github.com/JuPedSim">JuPedSim</a></p>
-      <p>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></p>
-    </footer>
-    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
-              <script type="text/javascript">
+
+            <script type="text/javascript">
             var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
             document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
           </script>
