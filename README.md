@@ -10,14 +10,14 @@ coupled and can be used independently at the moment. These are:
 model. It implements a couple of measurement methods including the [Voronoi-method](http://dx.doi.org/10.1016/j.physa.2009.12.015) for calculating the density.
 4.  `JPSeditor`: a tool for creating and editing geometry files with dxf import/export capabilities.
 
-The code is *actively developed* in a [GitLab repository](https://cst.version.fz-juelich.de/public/projects). Please consider cloning the code there.  To be **notified** about releases and updates please follow us [@JuPedSim](https://twitter.com/JuPedSim).
+The code is *actively developed* in a [GitLab repository](https://cst.version.fz-juelich.de/public/projects). Please consider cloning the code there.
 
 *JuPedSim is at the moment validated using the [RiMEA Testcases](http://www.rimea.de) Also it is stillundergoing an extensive unit-testing. Validation of the implemented models with respect to experimental data is planned, but only partially implemented.*
 
 ### Showcase
 
-To highlight some features of `JuPedSim` we have uploaded  some videos on
-our [YouTube channel](https://www.youtube.com/user/JuPedSim).
+To highlight some features of `JuPedSim` we have uploaded some videos on
+our [YouTube channel](https://www.youtube.com/channel/UCKS8w8CUClHEeN4K1SUSMBA).
 
 ### Building from sources
 ```shell
