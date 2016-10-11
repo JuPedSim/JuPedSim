@@ -23,10 +23,10 @@ our [YouTube channel](https://www.youtube.com/channel/UCKS8w8CUClHEeN4K1SUSMBA).
 ```shell
 git clone git@github.com:JuPedSim/JuPedSim.git
 cd JuPedSim
-git submodule update --init
+git submodule update --init --recursive
 make -f Makefile.cmake
 ```
-The release binaries will be located in the bin folder.
+After a successful compilation, the release binaries will be located in the bin folder.
 
 ### Frequently Asked Questions
 -------------------------------
@@ -37,15 +37,15 @@ The release binaries will be located in the bin folder.
  * `JuPedSim` is developed at the [Forschungszentrum Jülich](http://www.fz-juelich.de) in Germany and the bleeding edge code is in their intern git [repository](http://cst.version.fz-juelich.de). At the moment only specific tags are pushed to GitHub.
 
 3. Is there a manual ?
- * Of course, the user's guide is found in the downloaded archive.
+ * The online documentation of [jpscore](http://jupedsim.github.io/jpscore/) and [jpsreport](http://jupedsim.github.io/jpsreport/)
 
 4. Are the models validated ?
  * At the moment with the validation scenarios from [RiMEA](http://www.rimea.de)
  * We are actually setting up verification and validation tests. Some verification tests are included in this version but most of them will be available with the next version.
 
 5. How can I contribute to `JuPedSim`?
- * Testing and reporting bugs will be great. If you want to contribute actively to the code, by implementing new models and/or features, you are welcome to do so. Please contact uns per mail at
+ * Testing and reporting bugs will be great. If you want to contribute actively to the code, by implementing new models and/or features, you are welcome to do so. Please contact us per mail at
  `info at jupedsim.org` so that we can grant you access to the repositories.
 
 6. And the License?
-  * JuPedSim itself is released under LGPL and the included librairies under their respective licenses of course.
+  * JuPedSim itself is released under LGPL and the included libraries under their respective licenses of course.
