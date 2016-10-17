@@ -1,5 +1,36 @@
-### JuPedSim
-------------
+<a name="top"></a>
+<a href="http://www.twitter.com/JuPedSim"><img src="http://i.imgur.com/tXSoThF.png" alt="Twitter" align="right"></a><br>
+***
+<p align="center"><img src="/doc.jupedsim.png" alt="JuPedSim"/></p>
+<p align="center">
+<b><a href="http://www.jupedsim.org">Documentation</a></b>
+|
+<b><a href="http://jupedsim.github.io/jpscore/">jpscore</a></b>
+|
+<b><a href="http://jupedsim.github.io/jpsreport/">jpsreport</a></b>
+|
+<b><a href="https://cst.version.fz-juelich.de/jupedsim/jpseditor">jpseditor</a></b>
+|
+<b><a href="https://cst.version.fz-juelich.de/jupedsim/jpsvis">jpsvis</a></b>
+|
+<b><a href="http://jupedsim.github.io/jpscore/contributing/">contribute</a></b>
+|
+<b><a href="https://hub.docker.com/u/jupedsim/">docker images</a></b>
+</p>
+***
+
+**Quick Install:**
+
+```shell
+git clone git@github.com:JuPedSim/JuPedSim.git
+cd JuPedSim
+git submodule update --init --recursive
+make -f Makefile.cmake
+```
+After a successful compilation, the release binaries will be located in the bin folder.
+
+**Introduction**
+
 Simulating pedestrians with state of the art models.
 The Jülich Pedestrian Simulator ([JuPedSim](http://www.jupedsim.org)) consists of three modules which are loosely
 coupled and can be used independently at the moment. These are:
@@ -12,40 +43,12 @@ model. It implements a couple of measurement methods including the [Voronoi-meth
 
 The code is *actively developed* in a [GitLab repository](https://cst.version.fz-juelich.de/public/projects). Please consider cloning the code there.
 
-*JuPedSim is at the moment validated using the [RiMEA Testcases](http://www.rimea.de) Also it is stillundergoing an extensive unit-testing. Validation of the implemented models with respect to experimental data is planned, but only partially implemented.*
+*JuPedSim is at the moment validated using the [RiMEA Testcases](http://www.rimea.de) Also it is stillundergoing an extensive unit-testing. 
+Validation of the implemented models with respect to experimental data is planned, but only partially implemented.*
 
-### Showcase and tutorials
+**Showcase and tutorials**
 
-To highlight some features of `JuPedSim` we have uploaded some videos on
+To highlight some features of `JuPedSim` we have uploaded some videos and tutorials on
 our [YouTube channel](https://www.youtube.com/channel/UCKS8w8CUClHEeN4K1SUSMBA).
 
-### Building from sources
-```shell
-git clone git@github.com:JuPedSim/JuPedSim.git
-cd JuPedSim
-git submodule update --init --recursive
-make -f Makefile.cmake
-```
-After a successful compilation, the release binaries will be located in the bin folder.
 
-### Frequently Asked Questions
--------------------------------
-1. What is the official page of `JuPedSim`?
-  * www.jupedsim.org and the contact is `info at jupedsim.org`. You will find more information on the working group and other tools and experimental pedestrians data we have been collecting over the years.
-
-2. Where is the official repository ?
- * `JuPedSim` is developed at the [Forschungszentrum Jülich](http://www.fz-juelich.de) in Germany and the bleeding edge code is in their intern git [repository](http://cst.version.fz-juelich.de). At the moment only specific tags are pushed to GitHub.
-
-3. Is there a manual ?
- * The online documentation of [jpscore](http://jupedsim.github.io/jpscore/) and [jpsreport](http://jupedsim.github.io/jpsreport/)
-
-4. Are the models validated ?
- * At the moment with the validation scenarios from [RiMEA](http://www.rimea.de)
- * We are actually setting up verification and validation tests. Some verification tests are included in this version but most of them will be available with the next version.
-
-5. How can I contribute to `JuPedSim`?
- * Testing and reporting bugs will be great. If you want to contribute actively to the code, by implementing new models and/or features, you are welcome to do so. Please contact us per mail at
- `info at jupedsim.org` so that we can grant you access to the repositories.
-
-6. And the License?
-  * JuPedSim itself is released under LGPL and the included libraries under their respective licenses of course.
