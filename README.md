@@ -1,5 +1,5 @@
 <a name="top"></a>
-<a href="http://www.twitter.com/JuPedSim"><img src="http://i.imgur.com/tXSoThF.png" alt="Twitter" align="right"></a><br>
+<a href="https://raw.githubusercontent.com/JuPedSim/jpscore/master/LICENSE"><img src="https://img.shields.io/badge/license-GPL-blue.svg" alt="LGPL" align="right"></a> <a href="http://www.twitter.com/JuPedSim"><img src="http://i.imgur.com/tXSoThF.png" alt="Twitter" align="right"></a><br>
 ***
 <p align="center"><img src="/doc/jupedsim_small.png" alt="JuPedSim"/></p>
 <p align="center">
