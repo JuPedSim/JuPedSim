@@ -1,7 +1,7 @@
 <a name="top"></a>
 <a href="http://www.twitter.com/JuPedSim"><img src="http://i.imgur.com/tXSoThF.png" alt="Twitter" align="right"></a><br>
 ***
-<p align="center"><img src="/doc/jupedsim.png" alt="JuPedSim"/></p>
+<p align="center"><img src="/doc/jupedsim_small.png" alt="JuPedSim"/></p>
 <p align="center">
 <b><a href="http://www.jupedsim.org">Documentation</a></b>
 |
