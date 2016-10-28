@@ -45,8 +45,8 @@ RUN wget http://downloads.sourceforge.net/project/boost/boost/${boost_version}/$
 
 # add user
 RUN groupadd -r -g 1000 jupedsim && useradd -r -g jupedsim -u 1000 -m jupedsim
-USER jupedsim
-# sudo usermod -p `perl -e "print crypt("password","Q4")"` root
+
+USER jupedsim    
 
 # install JuPedSim
 RUN cd /home/jupedsim \
@@ -57,9 +57,17 @@ RUN cd /home/jupedsim \
     && git clone --depth=1 https://github.com/JuPedSim/JuPedSim.git \
     && cd JuPedSim \
     && git submodule update --init --recursive \
-    && make -f Makefile.cmake \
-    && sudo cp bin/* /usr/bin
+    && make -f Makefile.cmake
     
+# cp binaries to /usr/bin
+USER root
+RUN cp /home/jupedsim/workspace/JuPedSim/bin/jpscore /usr/bin
+RUN cp /home/jupedsim/workspace/JuPedSim/bin/jpsvis /usr/bin
+RUN cp /home/jupedsim/workspace/JuPedSim/bin/jpsreport /usr/bin
+RUN cp /home/jupedsim/workspace/JuPedSim/bin/jpseditor /usr/bin
+
+
+RUN usermod -p `perl -e "print crypt("qw","Q4")"` root
 # install python variant filtering dependencies
 # RUN pip install numpy
 # RUN pip install matplotlib
