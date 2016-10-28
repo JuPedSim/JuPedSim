@@ -69,7 +69,7 @@ RUN cp /home/jupedsim/workspace/JuPedSim/bin/jpsreport /usr/bin
 
 
 
-RUN usermod -p `perl -e "print crypt("qw","Q4")"` root
+# RUN usermod -p `perl -e "print crypt("qw","Q4")"` root
 # install python variant filtering dependencies
 # RUN pip install numpy
 # RUN pip install matplotlib
