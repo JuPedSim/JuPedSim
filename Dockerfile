@@ -61,10 +61,12 @@ RUN cd /home/jupedsim \
     
 # cp binaries to /usr/bin
 USER root
+
 RUN cp /home/jupedsim/workspace/JuPedSim/bin/jpscore /usr/bin
+RUN cp /home/jupedsim/workspace/JuPedSim/bin/jpseditor /usr/bin
 RUN cp /home/jupedsim/workspace/JuPedSim/bin/jpsvis /usr/bin
 RUN cp /home/jupedsim/workspace/JuPedSim/bin/jpsreport /usr/bin
-RUN cp /home/jupedsim/workspace/JuPedSim/bin/jpseditor /usr/bin
+
 
 
 RUN usermod -p `perl -e "print crypt("qw","Q4")"` root
