@@ -58,7 +58,7 @@ RUN cd /home/jupedsim \
     && cd JuPedSim \
     && git submodule update --init --recursive \
     && make -f Makefile.cmake \
-    && cp bin/* /usr/bin
+    && sudo cp bin/* /usr/bin
     
 # install python variant filtering dependencies
 # RUN pip install numpy
