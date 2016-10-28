@@ -19,7 +19,7 @@
 </p>
 ***
 
-**Introduction**
+## Introduction
 
 Simulating pedestrians with state of the art models.
 The Jülich Pedestrian Simulator ([JuPedSim](http://www.jupedsim.org)) consists of three modules which are loosely
@@ -32,7 +32,7 @@ model. It implements a couple of measurement methods including the [Voronoi-meth
 4.  `JPSeditor`: a tool for creating and editing geometry files with dxf import/export capabilities.
 
 
-**Quick Install:**
+## Quick Install:
 
 ```shell
 git clone git@github.com:JuPedSim/JuPedSim.git
@@ -40,7 +40,43 @@ cd JuPedSim
 git submodule update --init --recursive
 make -f Makefile.cmake
 ```
-After a successful compilation, the release binaries will be located in the bin folder.
+After a successful compilation, the release binaries will be located in the `bin` folder.
+
+
+## How to use JuPedSim's Docker images
+
+`JuPedSim` offers also up to date Docker images. For these who wonder what the Docker is, here is what Docker.io says:
+
+> Docker is an open-source project to easily create lightweight, portable, self-sufficient containers 
+> from any application. 
+> The same container that a developer builds and tests on a laptop can run at scale, in production, 
+> on VMs, bare metal, OpenStack clusters, public clouds and more.
+
+Basically, we package `JuPedSim` and all its dependencies in a lightweight image, which can just used without any hassle. 
+
+### Linux
+
+For Linux systems please check this excellent blog: 
+[Running GUI apps with Docker](http://fabiorehm.com/blog/2014/09/11/running-gui-apps-with-docker/)
+
+### Mac OSX
+
+start `socat` to expose local xquartz socket on a TCP port:
+
+    socat TCP-LISTEN:6000,reuseaddr,fork UNIX-CLIENT:\"$DISPLAY\"
+
+Then in a new window pass the `DISPLAY` with your own IP-address to the container by running
+
+    docker run -it -e DISPLAY=YOUR_IP:0 jupedsim/jupedsim
+
+See also this [issue](https://github.com/docker/docker/issues/8710)
+
+Note: You can get you IP by typing in the terminal `ifconfig`.
+
+### Windows
+
+Works only with Windows 10.
+TODO: How?
 
 **Showcase and tutorials**
 
