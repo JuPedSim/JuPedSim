@@ -78,16 +78,17 @@ Note: You can get you IP by typing in the terminal `ifconfig`.
 Works only with Windows 10.
 TODO: How?
 
-**Showcase and tutorials**
+## Showcase and tutorials
 
 To highlight some features of `JuPedSim` we have uploaded some videos and tutorials on
 our [YouTube channel](https://www.youtube.com/channel/UCKS8w8CUClHEeN4K1SUSMBA).
 
-**Repository and tests**
+## Repository and tests
 
 - [GitLab repository](https://cst.version.fz-juelich.de/public/projects). Please consider cloning the code there.
 
-`JuPedSim` is at the moment validated using the [RiMEA Testcases](http://www.rimea.de). Also it is stillundergoing an extensive unit-testing. 
+`JuPedSim` is at the moment validated using the [RiMEA Testcases](http://www.rimea.de). 
+Also it is still undergoing an extensive unit-testing. 
 Validation of the implemented models with respect to experimental data is planned, but only partially implemented.
 
 
