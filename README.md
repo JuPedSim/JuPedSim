@@ -1,22 +1,8 @@
-<a name="top"></a>
-<a href="https://raw.githubusercontent.com/JuPedSim/jpscore/master/LICENSE"><img src="https://img.shields.io/badge/license-GPL-blue.svg" alt="LGPL" align="right"></a> <a href="http://www.twitter.com/JuPedSim"><img src="http://i.imgur.com/tXSoThF.png" alt="Twitter" align="right"></a><br>
+ [![LGPL](https://img.shields.io/badge/license-GPL-blue.svg)](https://raw.githubusercontent.com/JuPedSim/jpscore/master/LICENSE)[![twitter](http://i.imgur.com/tXSoThF.png)](http://www.twitter.com/JuPedSim)
 ***
-<p align="center"><img src="/doc/jupedsim_small.png" alt="JuPedSim"/></p>
-<p align="center">
-<b><a href="http://www.jupedsim.org">documentation</a></b>
-|
-<b><a href="http://jupedsim.github.io/jpscore/">jpscore</a></b>
-|
-<b><a href="http://jupedsim.github.io/jpsreport/">jpsreport</a></b>
-|
-<b><a href="https://cst.version.fz-juelich.de/jupedsim/jpseditor">jpseditor</a></b>
-|
-<b><a href="https://cst.version.fz-juelich.de/jupedsim/jpsvis">jpsvis</a></b>
-|
-<b><a href="https://hub.docker.com/u/jupedsim/">docker images</a></b>
-|
-<b><a href="http://jupedsim.github.io/jpscore/contributing/">contribute</a></b>
-</p>
+![logo](https://github.com/JuPedSim/JuPedSim/blob/master/doc/jupedsim_small.png?raw=true)
+
+[**documentation**](http://www.jupedsim.org) | [**jpscore**](http://jupedsim.github.io/jpscore) | [**jpsreport**](http://jupedsim.github.io/jpsreport) | [**jpseditor**](https://cst.version.fz-juelich.de/jupedsim/jpseditor) | [**jpsvis**](https://cst.version.fz-juelich.de/jupedsim/jpsvis) | [**docker images**](https://hub.docker.com/u/jupedsim/) | [**contribute**](http://jupedsim.github.io/jpscore/contributing/)
 ***
 
 ## Introduction
@@ -25,11 +11,11 @@ Simulating pedestrians with state of the art models.
 The Jülich Pedestrian Simulator ([JuPedSim](http://www.jupedsim.org)) consists of three modules which are loosely
 coupled and can be used independently at the moment. These are:
 
-1. `JPScore`: the core module computing the trajectories. See [list](http://jupedsim.github.io/jpscore/models/operativ) of implemented models.
-2. `JPSvis`: a tool for visualising the input (geometry) and output (trajectories) data.
-3. `JPSreport`: a tool for analysing the trajectories and validating the
+1. `jpscore`: the core module computing the trajectories. See [list](http://jupedsim.github.io/jpscore/models/operativ) of implemented models.
+2. `jpsreport`: a tool for analyzing the trajectories and validating the
 model. It implements a couple of measurement methods including the [Voronoi-method](http://dx.doi.org/10.1016/j.physa.2009.12.015) for calculating the density.
-4.  `JPSeditor`: a tool for creating and editing geometry files with dxf import/export capabilities.
+3. `jpsvis`: a tool for visualizing the input (geometry) and output (trajectories) data.
+4.  `jpseditor`: a tool for creating and editing geometry files with dxf import/export capabilities.
 
 
 ## Quick Install:
@@ -37,7 +23,7 @@ model. It implements a couple of measurement methods including the [Voronoi-meth
 ```shell
 git clone git@github.com:JuPedSim/JuPedSim.git
 cd JuPedSim
-git submodule update --init --recursive
+git submodule update --init --recursive # this is VERY important, otherwise the submodules will be empty
 make -f Makefile.cmake
 ```
 After a successful compilation, the release binaries will be located in the `bin` folder.
@@ -76,7 +62,8 @@ Note: You can get you IP by typing in the terminal `ifconfig`.
 ### Windows
 
 Works only with Windows 10.
-TODO: How?
+
+@todo: How? need someone with a windows machine to check this.
 
 ## Showcase and tutorials
 
