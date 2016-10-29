@@ -67,7 +67,7 @@ RUN cp /home/jupedsim/workspace/JuPedSim/bin/jpseditor /usr/bin
 RUN cp /home/jupedsim/workspace/JuPedSim/bin/jpsvis /usr/bin
 RUN cp /home/jupedsim/workspace/JuPedSim/bin/jpsreport /usr/bin
 
-
+USER jupedsim
 
 # RUN usermod -p `perl -e "print crypt("qw","Q4")"` root
 # install python variant filtering dependencies
