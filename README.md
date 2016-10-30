@@ -59,11 +59,14 @@ See also this [issue](https://github.com/docker/docker/issues/8710)
 
 This will mount `/some/host/folder` in docker's `/tmp`, which is useful to exchange data between your machine and the docker container.
 
-Issue: There is an issue after updating XQuartz: `libGL error: failed to load driver: swrast `
+There seems to be an issue after updating XQuartz: `libGL error: failed to load driver: swrast `
 
-It seems that downgrading to 2.7.8 solved the problem. 
+Downgrading to 2.7.8 solves the problem. 
 
  Note: You can get you IP by typing in the terminal `ifconfig`.
+
+![docker](doc/docker_jpsvis.png)
+
 
 ### Windows
 
