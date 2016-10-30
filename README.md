@@ -53,11 +53,17 @@ start `socat` to expose local xquartz socket on a TCP port:
 
 Then in a new window pass the `DISPLAY` with your own IP-address to the container by running
 
-    docker run -it -e DISPLAY=YOUR_IP:0 jupedsim/jupedsim
+    docker run -it -e DISPLAY=YOUR_IP:0 -v /some/host/folder/:/tmp jupedsim/jupedsim
 
 See also this [issue](https://github.com/docker/docker/issues/8710)
 
-Note: You can get you IP by typing in the terminal `ifconfig`.
+This will mount `/some/host/folder` in docker's `/tmp`, which is useful to exchange data between your machine and the docker container.
+
+Issue: There is an issue after updating XQuartz: `libGL error: failed to load driver: swrast `
+
+It seems that downgrading to 2.7.8 solved the problem. 
+
+ Note: You can get you IP by typing in the terminal `ifconfig`.
 
 ### Windows
 
