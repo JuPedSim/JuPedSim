@@ -1,6 +1,6 @@
  
 
-[![DOI](https://zenodo.org/badge/13744388.svg)](https://zenodo.org/badge/latestdoi/13744388)[![LGPL](https://img.shields.io/badge/license-GPL-blue.svg)](https://raw.githubusercontent.com/JuPedSim/jpscore/master/LICENSE)[![twitter](http://i.imgur.com/tXSoThF.png)](http://www.twitter.com/JuPedSim)
+[![DOI](https://zenodo.org/badge/13744388.svg)](https://zenodo.org/badge/latestdoi/13744388) [![LGPL](https://img.shields.io/badge/license-GPL-blue.svg)](https://raw.githubusercontent.com/JuPedSim/jpscore/master/LICENSE) [![twitter](http://i.imgur.com/tXSoThF.png)](http://www.twitter.com/JuPedSim)
 ***
 ![logo](https://github.com/JuPedSim/JuPedSim/blob/master/doc/jupedsim_small.png?raw=true)
 
