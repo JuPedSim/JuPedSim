@@ -23,7 +23,7 @@ model. It implements a couple of measurement methods including the [Voronoi-meth
 ## Quick Install:
 
 ```shell
-git clone git@github.com:JuPedSim/JuPedSim.git
+git clone https://github.com/JuPedSim/JuPedSim.git
 cd JuPedSim
 git submodule update --init --recursive # this is VERY important, otherwise the submodules will be empty
 make -f Makefile.cmake
