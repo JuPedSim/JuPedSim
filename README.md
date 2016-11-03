@@ -19,16 +19,33 @@ model. It implements a couple of measurement methods including the [Voronoi-meth
 3. `jpsvis`: a tool for visualizing the input (geometry) and output (trajectories) data.
 4.  `jpseditor`: a tool for creating and editing geometry files with dxf import/export capabilities.
 
+## Requirements
 
-## Quick Install:
+- [CMake](https://cmake.org/)
+- A compiler with support for C++11 e.g. g++ or clang or Visual Studio 2013
+- [Boost library](http://www.boost.org/)
+- For `jpseditor` [Qt](https://www.qt.io/)
+- For `jpsvis` [VTK](http://www.vtk.org/)
+
+***
+Note:
+`jpseditor` and `jpsvis` come with Windows executables and  `dmg`-files for Mac users. 
+Therefore, a compilation of these two packages may not be needed.
+
+## Quick Install
 
 ```shell
 git clone https://github.com/JuPedSim/JuPedSim.git
 cd JuPedSim
 git submodule update --init --recursive # this is VERY important, otherwise the submodules will be empty
-make -f Makefile.cmake
+make -f Makefile.cmake check
 ```
-`CMake` will eventually report any missing packages. Please fix these errors/warnings first **before** proceeding with the compilation of `JuPedSim`
+
+`CMake` will eventually report any missing packages. Please fix these errors/warnings first **before** proceeding with the compilation of `JuPedSim` with 
+
+```shell
+make -f Makefile.cmake check release
+```
 
 ## How to use JuPedSim's Docker images
 
