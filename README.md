@@ -28,8 +28,7 @@ cd JuPedSim
 git submodule update --init --recursive # this is VERY important, otherwise the submodules will be empty
 make -f Makefile.cmake
 ```
-After a successful compilation, the release binaries will be located in the `bin` folder.
-
+`CMake` will eventually report any missing packages. Please fix these errors/warnings first **before** proceeding with the compilation of `JuPedSim`
 
 ## How to use JuPedSim's Docker images
 
