@@ -1,12 +1,10 @@
 ---
 layout: post
 title: About
-subtitle: JuPedSim: Jülich pedestrian simulator
-#bigimg: ../docker.jpg
-#/img/jupedsim_small.png
+subtitle: Jülich pedestrian simulator
 ---
 
-Open source framework for simulating and analyzing pedestrian dynamics. [![DOI](https://zenodo.org/badge/13744388.svg)](https://zenodo.org/badge/latestdoi/13744388)
+Open source framework for simulating, analyzing and visualizing  pedestrian dynamics. [![DOI](https://zenodo.org/badge/13744388.svg)](https://zenodo.org/badge/latestdoi/13744388)
 
 ![logo](https://github.com/JuPedSim/JuPedSim/blob/master/doc/jupedsim_small.png?raw=true)
 
@@ -89,6 +87,15 @@ When reporting a bug or an issue, please use ONLY the gitlab issue tracker.
 
 Releases can be downloades [here](https://github.com/JuPedSim/JuPedSim/releases).
 
+
+
+## Support 
+
+We are heavily working on this project which means that:
+
+- It’s not done. We will be releasing new enhancements, bug fixes etc.
+- We love your support. If you find any errors or have suggestions, please write an issue in our [issue-tracker](https://cst.version.fz-juelich.de/jupedsim/jpsvis/issues). We will try hard to fix it.
+- Be patient. We are scientists and PhD/master students. Therefore, we primarily care about our research and theses. 
 
 ## Contact
 

@@ -1,3 +1,13 @@
-Documentation for **JPSreport** can be found [here](http://jupedsim.github.io/jpsreport/).
+---
+layout: page
+title: JPSreport 
+subtitle: Analysis module of trajectories obtained from video recordings as well as from simulations. 
+---
 
-Please open a new Issue if you encouter problems or have found a bug in the code.
+
+
+##  Documentation 
+
+[here](http://jupedsim.github.io/jpsreport/).
+
+
