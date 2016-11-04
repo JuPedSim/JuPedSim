@@ -6,10 +6,6 @@ subtitle: Simulating and analyzing pedestrian dynamics
 
 
 <div>
-<p><a href="https://zenodo.org/badge/latestdoi/13744388"><img src="https://zenodo.org/badge/13744388.svg" alt="DOI" /></a> <a href="https://raw.githubusercontent.com/JuPedSim/jpscore/master/LICENSE"><img src="https://img.shields.io/badge/license-GPL-blue.svg" alt="LGPL" /></a></p>
-</div>
-
-<div>
   <h2 id="quick-install">Quick Install</h2>
   <pre class="shell">
     <code>
@@ -17,14 +13,16 @@ subtitle: Simulating and analyzing pedestrian dynamics
       cd JuPedSim
       git submodule update --init --recursive
       make -f Makefile.cmake check
+
+      Note: it is very important to update the submodule, otherwise the they will be empty!
+      CMake will eventually report any missing packages.
+    Please fix these errors/warnings first <strong>before</strong> proceeding with 
+
+      make -f Makefile.cmake check release
     </code>
   </pre>
   
-  <p>Note: it is very important to update the submodule, otherwise the they will be empty!</p>
-  <p><code>CMake</code> will eventually report any missing packages.
-    Please fix these errors/warnings first <strong>before</strong> proceeding with the compilation of
-    <code>JuPedSim</code> with</p>
-  <pre class="shell"><code>make -f Makefile.cmake check release</code></pre>
+
 </div>
 
 
