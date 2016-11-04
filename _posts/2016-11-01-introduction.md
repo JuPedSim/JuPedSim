@@ -75,7 +75,8 @@ make -f Makefile.cmake check release
 
 ## License
 
-`JuPedSim` is published under ![https://img.shields.io/badge/license-GPL-blue.svg](https://raw.githubusercontent.com/JuPedSim/jpscore/master/LICENSE)
+[![LGPL](https://img.shields.io/badge/license-GPL-blue.svg)](http://www.google.com.au/images/nav_logo7.png)](http://google.com.au/)
+`JuPedSim` is published under 
 
 
 ## Repository
