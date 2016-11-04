@@ -29,10 +29,10 @@ navbar-links:
     - JPSeditor: "jpseditor"
     - JPSvis: "jpsvis"
   Resources:
-    - GitLab project: "http://cst.version.fz-juelich.de/jupedsim/"
-    - GitHub project: "https://github.com/JuPedSim"
-    - Releases: "https://github.com/JuPedSim/JuPedSim/releases"
-    - Docker images: "https://hub.docker.com/r/jupedsim/" 
+    - GitLab: "http://cst.version.fz-juelich.de/jupedsim/"
+    - GitHub: "https://github.com/JuPedSim"
+    - Release: "https://github.com/JuPedSim/JuPedSim/releases"
+    - Docker: "https://hub.docker.com/r/jupedsim/" 
   Disclaimer: "disclaimer"
 
 # Image to show in the navigation bar - image must be a square (width = height)
