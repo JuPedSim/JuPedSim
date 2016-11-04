@@ -8,7 +8,7 @@ url: "http://username.github.io"
 baseurl: ""
 
 # If you are building a GitHub project page then use these settings:
-url: "http://jupedsim.github.io/JuPedSim/"
+url: "http://jupedsim.org"
 #baseurl: "/projectname"
 
 # Of course don't forget to change the username and projectname to YOUR username and project
@@ -23,15 +23,15 @@ description: Simulating pedestrians with state of the art models
 
 # List of links in the navigation bar
 navbar-links:
-  JPScore: "jpscore"
-  JPSreport: "jpsreport"
-  JPSeditor: "jpseditor"
-  JPSvis: "jpsvis"
+  JPScore: "http://jupedsim.github.io/jpscore/"
+  JPSreport: "http://jupedsim.github.io/jpsreport/"
+  JPSeditor: "https://cst.version.fz-juelich.de/jupedsim/jpseditor"
+  JPSvis: "https://cst.version.fz-juelich.de/jupedsim/jpsvis"
   Resources:
     - GitHub project: "https://github.com/JuPedSim"
     - GitLab project: "http://cst.version.fz-juelich.de/jupedsim/"
     - Docker images: "https://hub.docker.com/r/jupedsim/" 
-  Disclaimer: "disclaimer"
+  Disclaimer: "disclaimer.md"
 
 # Image to show in the navigation bar - image must be a square (width = height)
 # Remove this parameter if you don't want an image in the navbar
@@ -54,7 +54,7 @@ author:
   #stackoverflow: yourlink  # eg. "3943160/daattali"
   #snapchat: yourname  # eg. daattali
   #instagram: yourname # eg. daattali
-  youtube: https://www.youtube.com/channel/UCKS8w8CUClHEeN4K1SUSMBA   # eg. user/daattali or channel/daattali
+  youtube: channel/UCKS8w8CUClHEeN4K1SUSMBA   # eg. user/daattali or channel/daattali
   #spotify: yourname   # eg. daattali
 
 # Select which links to show in the footer
