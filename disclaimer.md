@@ -1,4 +1,10 @@
-# Disclaimer
+---
+layout: page
+title: Disclaimer
+tags: [jupedsim]
+---
+
+
 
 In no event shall `JuPedSim` be liable to any party for direct, indirect,
 special, incidental, or consequential damages, including lost profits,
