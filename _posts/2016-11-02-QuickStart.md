@@ -13,7 +13,6 @@ To install `JuPedSim` there are three steps to follow:
 
 
 
-
 # Get the code
 
 ```bash
@@ -23,7 +22,7 @@ git submodule update --init --recursive
 ```
 
 # Check the requirements 
-Some packages and libraries are required to get `JuPedSim` compiled. See also [requirements](/_posts/2016-11-03-Requirements).
+Some packages and libraries are required to get `JuPedSim` compiled. See also [requirements](/2016-11-03-Requirements).
 
 You can check your system with 
 
