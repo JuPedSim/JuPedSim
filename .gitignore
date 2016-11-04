@@ -1,4 +1,5 @@
-jpscore
-jpsvis
-jpseditor
-jpsreport
+jpscore/
+jpsvis/
+jpseditor/
+jpsreport/
+tmp/
