@@ -6,7 +6,7 @@ subtitle: JuPedSim: Jülich pedestrian simulator
 #/img/jupedsim_small.png
 ---
 
-Open source framework for simulating and analyzing pedestrian dynamics.
+Open source framework for simulating and analyzing pedestrian dynamics. [![DOI](https://zenodo.org/badge/13744388.svg)](https://zenodo.org/badge/latestdoi/13744388)
 
 ![logo](https://github.com/JuPedSim/JuPedSim/blob/master/doc/jupedsim_small.png?raw=true)
 
@@ -75,8 +75,7 @@ make -f Makefile.cmake check release
 
 ## License
 
-
-`JuPedSim` is published under [![LGPL](https://img.shields.io/badge/license-GPL-blue.svg)](http://www.google.com.au/images/nav_logo7.png)](http://google.com.au/)
+`JuPedSim` is published under [![LGPL](https://img.shields.io/badge/license-GPL-blue.svg)](https://raw.githubusercontent.com/JuPedSim/jpscore/master/LICENSE)
 
 
 ## Repository
