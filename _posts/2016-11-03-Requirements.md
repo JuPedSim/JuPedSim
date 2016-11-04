@@ -24,7 +24,7 @@ Tested with
 
 ## Required libraries 
 
-- [Boost library](http://www.boost.org/)
+- [Boost library](http://www.boost.org/): necessary for `jpscore` and `jpsreport`
 - [Qt](https://www.qt.io/): necessary for `jpseditor` and `jpsvis`
 - [VTK](http://www.vtk.org/): necessary for `jpsvis`
 
@@ -35,7 +35,7 @@ Note:
 Therefore, a compilation of these two packages may not be needed.
 
 
-## Install packages for Mac OS X  (El Capitan)
+### Install Qt and VTK for OS X  (El Capitan)
 
 Assuming you have [Homebrew](http://brew.sh/). Otherwise, these commands 
 can be slightly adapted to [MacPorts](https://www.macports.org/)
@@ -48,7 +48,7 @@ brew install qt
 brew install vtk --with-qt --without-python --with-python3 --without-boost  --build-from-source
 ```
 
-### Install packages for Debian 7.7 (Ubuntu)
+### Install Qt and VTK  for Linux (Ubuntu, Debian)
 
 ```
 sudo apt-get install libmgl-qt5
@@ -59,7 +59,7 @@ sudo apt-get install libvtk5.8-qt4
 Alternatively, you can download the latest version of QT [here](https://www.qt.io/download/)
 and the latest version of VTK [here](http://www.vtk.org/download/) and compile them manually.
 
-## Boost at least 1.57
+## Install Boost (at least v1.57)
 
 You can compile boost as follows: 
 
@@ -84,4 +84,4 @@ brew install boost
 
 ***
 
-Note: Debian and Ubuntu have an old version of Boost, which is not supported by `JuPedSIm`. Therefore, you need compile it. 
+Note: Debian's and Ubuntu's install manager offer an old version of Boost, which is not supported by `JuPedSim`. Therefore, you need compile it. 
