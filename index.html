@@ -6,12 +6,6 @@ subtitle: Simulating and analyzing pedestrian dynamics
 
 
 <div>
-<p><img src="http://www.fz-juelich.de/ias/jsc/EN/Research/ModellingSimulation/CivilSecurityTraffic/PedestrianDynamics/Barrier.gif?__blob=normal" alt="crowd" /></p>
-</div>
-
-
-
-<div>
 <p><a href="https://zenodo.org/badge/latestdoi/13744388"><img src="https://zenodo.org/badge/13744388.svg" alt="DOI" /></a> <a href="https://raw.githubusercontent.com/JuPedSim/jpscore/master/LICENSE"><img src="https://img.shields.io/badge/license-GPL-blue.svg" alt="LGPL" /></a></p>
 </div>
 
@@ -27,19 +21,14 @@ subtitle: Simulating and analyzing pedestrian dynamics
   </pre>
   
   <p>Note: it is very important to update the submodule, otherwise the they will be empty!</p>
-  <p><code>CMake</code> will eventually report any missing packages. Please fix these errors/warnings first <strong>before</strong> proceeding with the compilation of <code>JuPedSim</code> with</p>
+  <p><code>CMake</code> will eventually report any missing packages.
+    Please fix these errors/warnings first <strong>before</strong> proceeding with the compilation of
+    <code>JuPedSim</code> with</p>
   <pre class="shell"><code>make -f Makefile.cmake check release</code></pre>
 </div>
 
 
-<div class="posts-list">
-    <code>
-      git clone https://github.com/JuPedSim/JuPedSim.git
-      cd JuPedSim
-      git submodule update --init --recursive
-      make -f Makefile.cmake check
-    </code>
-  
+<div class="posts-list">  
   {% for post in paginator.posts %}
   <article class="post-preview">
     <a href="{{ post.url | prepend: site.baseurl }}">
