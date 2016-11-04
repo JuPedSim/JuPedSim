@@ -1,17 +1,32 @@
 ---
 layout: post
 title: Compiling from source
-title: Requirements
+title: Dependencies for compiling
 #bigimg: /img/jupedsim_small.png
 ---
 
 In order to compile `JuPedSim` it is necessary to first install the required libraries. 
 
-- [CMake](https://cmake.org/)
-- A compiler with support for C++11 e.g. g++ or clang or Visual Studio 2013
+## Supported compilers
+
+Any compiler with support for C++11. 
+
+Tested with   
+
+- `g++` (linux/osx)
+- `clang` (osx)
+- Visual Studio 2013 (Windows)
+
+## Required tools 
+
+- cmake: see this [tutorial](https://www.johnlamp.net/cmake-tutorial-1-getting-started.html) for a brief overview.  
+- Python (highly recommended): needed to plot results of analysis. 
+
+## Required libraries 
+
 - [Boost library](http://www.boost.org/)
-- For `jpseditor` [Qt](https://www.qt.io/)
-- For `jpsvis` [VTK](http://www.vtk.org/)
+- [Qt](https://www.qt.io/): necessary for `jpseditor` and `jpsvis`
+- [VTK](http://www.vtk.org/): necessary for `jpsvis`
 
 ***
 
