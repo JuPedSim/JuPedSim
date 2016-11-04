@@ -1,8 +1,6 @@
 ---
 layout: post
 title: About
-
-
 subtitle: JuPedSim: Jülich pedestrian simulator
 #bigimg: ../docker.jpg
 #/img/jupedsim_small.png
