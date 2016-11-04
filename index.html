@@ -1,37 +1,12 @@
 ---
-layout: page
+layout: 
 title: JuPedSim
 subtitle: Simulating and analyzing pedestrian dynamics
 ---
 
-<div id="header">
-<h1 class="title">Jülich pedestrian simulator</h1>
-</div>
-<p><a href="https://zenodo.org/badge/latestdoi/13744388"><img src="https://zenodo.org/badge/13744388.svg" alt="DOI" /></a> <a href="https://raw.githubusercontent.com/JuPedSim/jpscore/master/LICENSE"><img src="https://img.shields.io/badge/license-GPL-blue.svg" alt="LGPL" /></a> <a href="http://www.twitter.com/JuPedSim"><img src="http://i.imgur.com/tXSoThF.png" alt="twitter" /></a></p>
-<hr />
-<div class="figure">
-<img src="https://github.com/JuPedSim/JuPedSim/blob/master/doc/jupedsim_small.png?raw=true" alt="logo" />
-<p class="caption">logo</p>
-</div>
-<p><a href="http://www.jupedsim.org"><strong>documentation</strong></a> | <a href="http://jupedsim.github.io/jpscore"><strong>jpscore</strong></a> | <a href="http://jupedsim.github.io/jpsreport"><strong>jpsreport</strong></a> | <a href="https://cst.version.fz-juelich.de/jupedsim/jpseditor"><strong>jpseditor</strong></a> | <a href="https://cst.version.fz-juelich.de/jupedsim/jpsvis"><strong>jpsvis</strong></a> | <a href="https://hub.docker.com/u/jupedsim/"><strong>docker images</strong></a> | <a href="http://jupedsim.github.io/jpscore/contributing/"><strong>contribute</strong></a></p>
-<h2 id="introduction">Introduction</h2>
-<p>Simulating pedestrians with state of the art models. The Jülich Pedestrian Simulator (<a href="http://www.jupedsim.org">JuPedSim</a>) consists of three modules which are loosely coupled and can be used independently at the moment. These are:</p>
-<ol style="list-style-type: decimal">
-<li><code>jpscore</code>: the core module computing the trajectories. See <a href="http://jupedsim.github.io/jpscore/models/operativ">list</a> of implemented models.</li>
-<li><code>jpsreport</code>: a tool for analyzing the trajectories and validating the model. It implements a couple of measurement methods including the <a href="http://dx.doi.org/10.1016/j.physa.2009.12.015">Voronoi-method</a> for calculating the density.</li>
-<li><code>jpsvis</code>: a tool for visualizing the input (geometry) and output (trajectories) data.</li>
-<li><code>jpseditor</code>: a tool for creating and editing geometry files with dxf import/export capabilities.</li>
-</ol>
-<h2 id="requirements">Requirements</h2>
-<ul>
-<li><a href="https://cmake.org/">CMake</a></li>
-<li>A compiler with support for C++11 e.g. g++ or clang or Visual Studio 2013</li>
-<li><a href="http://www.boost.org/">Boost library</a></li>
-<li>For <code>jpseditor</code> <a href="https://www.qt.io/">Qt</a></li>
-<li>For <code>jpsvis</code> <a href="http://www.vtk.org/">VTK</a></li>
-</ul>
-<hr />
-<p>Note: <code>jpseditor</code> and <code>jpsvis</code> come with Windows executables and <code>dmg</code>-files for Mac users. Therefore, a compilation of these two packages may not be needed.</p>
+<div>
+<p><a href="https://zenodo.org/badge/latestdoi/13744388"><img src="https://zenodo.org/badge/13744388.svg" alt="DOI" /></a> <a href="https://raw.githubusercontent.com/JuPedSim/jpscore/master/LICENSE"><img src="https://img.shields.io/badge/license-GPL-blue.svg" alt="LGPL" /></a></p>
+
 <h2 id="quick-install">Quick Install</h2>
 <pre class="shell"><code>git clone https://github.com/JuPedSim/JuPedSim.git
 cd JuPedSim
