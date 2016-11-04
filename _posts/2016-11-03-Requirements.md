@@ -1,7 +1,7 @@
 ---
 layout: post
-title: Compiling from source
-subtitle: Dependencies for compiling
+title: Requirements
+subtitle: Dependencies of JuPedSim
 #bigimg: /img/jupedsim_small.png
 ---
 
