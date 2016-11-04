@@ -23,10 +23,11 @@ description: Simulating pedestrians with state of the art models
 
 # List of links in the navigation bar
 navbar-links:
-  JPScore: "http://jupedsim.github.io/jpscore/"
-  JPSreport: "http://jupedsim.github.io/jpsreport/"
-  JPSeditor: "https://cst.version.fz-juelich.de/jupedsim/jpseditor"
-  JPSvis: "https://cst.version.fz-juelich.de/jupedsim/jpsvis"
+  Packages: 
+    - JPScore: "http://jupedsim.github.io/jpscore/"
+    - JPSreport: "http://jupedsim.github.io/jpsreport/"
+    - JPSeditor: "https://cst.version.fz-juelich.de/jupedsim/jpseditor"
+    - JPSvis: "https://cst.version.fz-juelich.de/jupedsim/jpsvis"
   Resources:
     - GitHub project: "https://github.com/JuPedSim"
     - GitLab project: "http://cst.version.fz-juelich.de/jupedsim/"

@@ -4,6 +4,18 @@ title: JuPedSim
 subtitle: Simulating and analyzing pedestrian dynamics
 ---
 
+
+Simulating pedestrians with state of the art models.
+The Jülich Pedestrian Simulator ([JuPedSim](http://www.jupedsim.org)) consists of three modules which are loosely
+coupled and can be used independently at the moment. These are:
+
+1. `jpscore`: the core module computing the trajectories. See [list](http://jupedsim.github.io/jpscore/models/operativ) of implemented models.
+2. `jpsreport`: a tool for analyzing the trajectories and validating the
+model. It implements a couple of measurement methods including the [Voronoi-method](http://dx.doi.org/10.1016/j.physa.2009.12.015) for calculating the density.
+3. `jpsvis`: a tool for visualizing the input (geometry) and output (trajectories) data.
+4.  `jpseditor`: a tool for creating and editing geometry files with dxf import/export capabilities.
+
+
 <div class="posts-list">
   {% for post in paginator.posts %}
   <article class="post-preview">
