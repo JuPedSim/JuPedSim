@@ -1,5 +1,5 @@
 ---
-layout: 
+layout: page 
 title: JuPedSim
 subtitle: Simulating and analyzing pedestrian dynamics
 ---
@@ -8,16 +8,7 @@ subtitle: Simulating and analyzing pedestrian dynamics
 <p><a href="https://zenodo.org/badge/latestdoi/13744388"><img src="https://zenodo.org/badge/13744388.svg" alt="DOI" /></a> <a href="https://raw.githubusercontent.com/JuPedSim/jpscore/master/LICENSE"><img src="https://img.shields.io/badge/license-GPL-blue.svg" alt="LGPL" /></a></p>
 </div>
 
-
-<p>Note: it is very important to update the submodule, otherwise the they will be empty!</p>
-<p><code>CMake</code> will eventually report any missing packages. Please fix these errors/warnings first <strong>before</strong> proceeding with the compilation of <code>JuPedSim</code> with</p>
-<pre class="shell"><code>make -f Makefile.cmake check release</code></pre>
-
-</div>
-
-
-<div class="posts-list">
-  <h2 id="quick-install">Quick Install</h2>
+<h2 id="quick-install">Quick Install</h2>
 <pre class="shell">
   <code>
     git clone https://github.com/JuPedSim/JuPedSim.git
@@ -27,6 +18,13 @@ subtitle: Simulating and analyzing pedestrian dynamics
   </code>
 </pre>
 
+<p>Note: it is very important to update the submodule, otherwise the they will be empty!</p>
+<p><code>CMake</code> will eventually report any missing packages. Please fix these errors/warnings first <strong>before</strong> proceeding with the compilation of <code>JuPedSim</code> with</p>
+<pre class="shell"><code>make -f Makefile.cmake check release</code></pre>
+</div>
+
+
+<div class="posts-list">
   {% for post in paginator.posts %}
   <article class="post-preview">
     <a href="{{ post.url | prepend: site.baseurl }}">
