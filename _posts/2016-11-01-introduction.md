@@ -2,6 +2,7 @@
 layout: post
 title: About
 subtitle: Jülich pedestrian simulator
+permalink: 2016-11-01-introduction.html
 ---
 
 Open source framework for simulating, analyzing and visualizing  pedestrian dynamics. [![DOI](https://zenodo.org/badge/13744388.svg)](https://zenodo.org/badge/latestdoi/13744388)

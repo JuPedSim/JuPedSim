@@ -86,3 +86,6 @@ brew install boost
 ***
 
 Note: Debian's and Ubuntu's install manager offer an old version of Boost, which is not supported by `JuPedSim`. Therefore, you need compile it. 
+
+
+You can test your Boost installation by using this [minimal example](2016-11-04-boost.html).
