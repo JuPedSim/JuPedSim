@@ -105,7 +105,7 @@ excerpt_length: 50
 
 # Output options (more information on Jekyll's site)
 timezone: "Berlin"
-markdown: kramdown
+markdown: Kramdown
 highlighter: rouge
 permalink: /:year-:month-:day-:title/
 paginate: 5
