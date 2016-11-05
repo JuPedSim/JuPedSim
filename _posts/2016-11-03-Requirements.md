@@ -6,7 +6,6 @@ subtitle: Dependencies of JuPedSim
 permalink: 2016-11-03-requirements.html
 ---
 
-[quick](2016-11-03-quickstart.html)
 In order to compile `JuPedSim` it is necessary to first install the required libraries. 
 
 ## Supported compilers

@@ -5,8 +5,6 @@ subtitle: Compiling the code
 permalink: 2016-11-02-quickstart.html
 ---
 
-- [requirements](2016-11-03-requirements.html).
-
 To install `JuPedSim` there are three steps to follow: 
 
 # 1. Get the code
