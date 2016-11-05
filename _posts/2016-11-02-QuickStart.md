@@ -2,16 +2,9 @@
 layout: post
 title: Quick start
 subtitle: Compiling the code
-permalink: 2016-11-02-quickstart.html
 ---
 
 - [requirements](2016-11-03-requirements.html).
-- [requirements](2016-11-03-requirements.md).
-- [requirements](/2016-11-03-Requirements).
-- [requirements](/2016-11-03-requirements).
-- [requirements](/2016-11-03-requirements).
-- [requirements](../_posts/2016-11-03-requirements).
-- [requirements](../_posts/2016-11-03-Requirements).
 
 To install `JuPedSim` there are three steps to follow: 
 
