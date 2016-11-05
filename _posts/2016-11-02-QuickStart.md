@@ -2,6 +2,7 @@
 layout: post
 title: Quick start
 subtitle: Compiling the code
+permalink: 2016-11-02-quickstart.html
 ---
 
 - [requirements](2016-11-03-requirements.html).
