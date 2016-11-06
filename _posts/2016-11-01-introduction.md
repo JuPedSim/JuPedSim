@@ -43,7 +43,7 @@ which was established over the last years. See for example
 3. `jpsvis`: a tool for visualizing the input (geometry) and output (trajectories) data.
 4.  `jpseditor`: a tool for creating and editing geometry files with dxf import/export capabilities.
 
-![structure](../img/structure.png)
+![structure]({{ site.baseurl }}/img/structure.png)
 
 
 ## Showcase and tutorials
