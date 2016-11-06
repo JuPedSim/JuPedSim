@@ -18,7 +18,7 @@ and  focus on research, i.e. development and validation of new models or model f
 For any scientist and especially for  bachelor/master/PhD students it is important to not loose time in   developing "help tools" 
 e.g. scripts to visualize their results or editing geometries. 
 
-![timewasting](../img/timewasting.png)
+![timewasting]({{ site.baseurl }}/img/timewasting.png)
 
 
 `JuPedSim` is currently focusing on evacuation, but easily extendable to cover other areas 
