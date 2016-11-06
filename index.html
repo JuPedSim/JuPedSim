@@ -31,8 +31,8 @@ subtitle: Simulating and analyzing pedestrian dynamics
   {% assign sorted_posts = paginator.posts | sort: 'pub_date' | reversed %}
   {% for post in sorted_posts  reversed %}
   <article class="post-preview">
-    <a href="{{ post.url | prepend: site.baseurl }}">
-	  <h2 class="post-title">* {{ post.title }}</h2>
+    <a href="{{ post.url | prepend: site.baseurl }}" class="list-group-item">
+	  <h2 class="post-title">• {{ post.title }}</h2>
 	  {% if post.subtitle %}
 	  <h3 class="post-subtitle">
 	    {{ post.subtitle }}
