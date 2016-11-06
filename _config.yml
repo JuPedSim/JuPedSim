@@ -16,6 +16,10 @@ url: "http://jupedsim.org"
 # Name of website
 title: JuPedSim
 
+# version of the release
+
+version: '0.8.1'
+
 # Short description of your site
 description: Simulating pedestrians with state of the art models
 
