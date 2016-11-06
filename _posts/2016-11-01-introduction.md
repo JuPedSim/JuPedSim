@@ -72,21 +72,6 @@ make -f Makefile.cmake check release
 ```
 
 
-## License
-
-`JuPedSim` is published under [![LGPL](https://img.shields.io/badge/license-GPL-blue.svg)](https://raw.githubusercontent.com/JuPedSim/jpscore/master/LICENSE)
-
-
-## Repository
-
-We use a self-hosted [Gitlab](http://cst.version.fz-juelich.de/) repository to develop the code. 
-Our [GitHub](https://github.com/JuPedSim/JuPedSim) repository hosts selected branches and releases only.
-
-When reporting a bug or an issue, please use ONLY the gitlab issue tracker.
-
-## Download
-
-Releases can be downloades [here](https://github.com/JuPedSim/JuPedSim/releases).
 
 
 
