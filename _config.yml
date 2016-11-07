@@ -28,8 +28,8 @@ description: Simulating pedestrians with state of the art models
 # List of links in the navigation bar
 navbar-links:
   Packages: 
-    - JPScore: "jpscore"
-    - JPSreport: "jpsreport"
+    - JPScore: "http://jupedsim.github.io/jpscore/"
+    - JPSreport: "http://jupedsim.github.io/jpsreport"
     - JPSeditor: "jpseditor"
     - JPSvis: "jpsvis"
   Resources:
