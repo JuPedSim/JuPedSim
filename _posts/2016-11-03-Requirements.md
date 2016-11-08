@@ -52,6 +52,7 @@ brew install vtk --with-qt --without-python --with-python3 --without-boost  --bu
 ### Install Qt and VTK  for Linux (Ubuntu, Debian)
 
 ```
+sudo apt-get install qt5-default qttools5-dev-tools
 sudo apt-get install libvtk5-dev libvtk5.8-qt4 python-vtk libvtk-java
 ```
 
@@ -66,13 +67,14 @@ You can compile boost as follows:
 boost_version=1.61.0
 boost_dir=boost_1_61_0
 
-wget http://downloads.sourceforge.net/project/boost/boost/${boost_version}/${boost_dir}.tar.gz \
-    && tar xfz ${boost_dir}.tar.gz \
-    && rm ${boost_dir}.tar.gz \
-    && cd ${boost_dir} \
-    && ./bootstrap.sh --with-libraries=filesystem,test,system\
-    && ./b2 --without-python --prefix=/usr -j 4 link=shared runtime-link=shared install \
-    && cd .. && rm -rf ${boost_dir} && ldconfig
+wget http://downloads.sourceforge.net/project/boost/boost/${boost_version}/${boost_dir}.tar.gz
+tar xfz ${boost_dir}.tar.gz
+rm ${boost_dir}.tar.gz
+cd ${boost_dir}
+./bootstrap.sh --with-libraries=filesystem,test,system
+sudo ./b2 --without-python --prefix=/usr -j 4 link=shared runtime-link=shared install
+cd .. && rm -rf ${boost_dir}
+sudo ldconfig
 ```
 
 or if you are a `brew` user :
