@@ -52,9 +52,7 @@ brew install vtk --with-qt --without-python --with-python3 --without-boost  --bu
 ### Install Qt and VTK  for Linux (Ubuntu, Debian)
 
 ```
-sudo apt-get install libmgl-qt5
-sudo apt-get install libvtk5-dev
-sudo apt-get install libvtk5.8-qt4
+sudo apt-get install libvtk5-dev libvtk5.8-qt4 python-vtk libvtk-java
 ```
 
 Alternatively, you can download the latest version of QT [here](https://www.qt.io/download/)
