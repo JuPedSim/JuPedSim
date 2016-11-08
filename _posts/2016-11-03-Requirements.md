@@ -59,7 +59,7 @@ sudo apt-get install libvtk5-dev libvtk5.8-qt4 python-vtk libvtk-java
 Alternatively, you can download the latest version of QT [here](https://www.qt.io/download/)
 and the latest version of VTK [here](http://www.vtk.org/download/) and compile them manually.
 
-## Install Boost (at least v1.57)
+## Install Boost (at least v1.59)
 
 You can compile boost as follows: 
 
@@ -85,7 +85,6 @@ brew install boost
 
 ***
 
-Note: Debian's and Ubuntu's install manager offer an old version of Boost, which is not supported by `JuPedSim`. Therefore, you need compile it. 
-
+Note: Debian's and Ubuntu's install manager offer an old version of Boost, which is not supported by `JuPedSim`.
 
 You can test your Boost installation by using this [minimal example](2016-11-04-boost.html).
