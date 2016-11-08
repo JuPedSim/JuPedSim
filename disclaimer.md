@@ -1,7 +1,7 @@
 ---
 layout: page
 title: License and Disclaimer
-tags: [jupedsim]
+permalink: disclaimer.html
 ---
 
 ## Licence:
