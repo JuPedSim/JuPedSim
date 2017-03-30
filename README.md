@@ -99,7 +99,7 @@ our [YouTube channel](https://www.youtube.com/channel/UCKS8w8CUClHEeN4K1SUSMBA).
 
 ## Repository and tests
 
-- [GitLab repository](https://cst.version.fz-juelich.de/public/projects). Please consider cloning the code there.
+- [GitLab repository](https://gitlab.version.fz-juelich.de/public/projects). Please consider cloning the code there.
 
 `JuPedSim` is at the moment validated using the [RiMEA Testcases](http://www.rimea.de). 
 Also it is still undergoing an extensive unit-testing. 
