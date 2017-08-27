@@ -12,12 +12,12 @@ $(DIRS):
 
 
 check:
-	( cd bin/release && cmake -DCMAKE_BUILD_TYPE=release  -DBUILD_TESTING=OFF ../.. )
+	( mkdir -p bin/release && cd bin/release && cmake -DCMAKE_BUILD_TYPE=release  -DBUILD_TESTING=OFF ../.. )
 release:
-	( cd bin/release && cmake -DCMAKE_BUILD_TYPE=release  -DBUILD_TESTING=OFF ../..  && $(MAKE) --no-print-directory )
+	( mkdir -p bin/release && cd bin/release && cmake -DCMAKE_BUILD_TYPE=release  -DBUILD_TESTING=OFF ../..  && $(MAKE) --no-print-directory )
 
 debug:
-	( cd bin/debug && cmake -DCMAKE_BUILD_TYPE=debug  -DBUILD_TESTING=ON ../.. && $(MAKE) --no-print-directory )
+	( mkdir -p bin/debug && cd bin/debug && cmake -DCMAKE_BUILD_TYPE=debug  -DBUILD_TESTING=ON ../.. && $(MAKE) --no-print-directory )
 
 clean: clean-release clean-debug
 
