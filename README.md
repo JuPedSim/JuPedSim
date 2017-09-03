@@ -56,7 +56,7 @@ make -f Makefile.cmake check release
 > The same container that a developer builds and tests on a laptop can run at scale, in production, 
 > on VMs, bare metal, OpenStack clusters, public clouds and more.
 
-Basically, we package `JuPedSim` and all its dependencies in a lightweight image, which can just used without any hassle. 
+Basically, we package `JuPedSim` and all its dependencies in a lightweight image, which can just be used without any hassle. 
 
 ### Linux
 
