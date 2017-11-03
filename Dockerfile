@@ -20,8 +20,10 @@ RUN apt-get update && apt-get install -y \
     wget \
     libbz2-dev \ 
     python \
+    python3-setuptools \
     python-dev \
     python-pip \
+    python3-pip \
     qt5-default \
     qttools5-dev-tools \
     libvtk5-dev \
@@ -71,9 +73,9 @@ USER jupedsim
 
 # RUN usermod -p `perl -e "print crypt("qw","Q4")"` root
 # install python variant filtering dependencies
-# RUN pip install numpy
-# RUN pip install matplotlib
-
+RUN pip3 install numpy
+RUN pip3 install matplotlib
+RUN pip3 install Polygon
 
 # by default /bin/bash is executed
 CMD /bin/bash && echo "Thank you for using JuPedSim!"
