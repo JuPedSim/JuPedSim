@@ -69,13 +69,14 @@ RUN cp /home/jupedsim/workspace/JuPedSim/bin/jpseditor /usr/bin
 RUN cp /home/jupedsim/workspace/JuPedSim/bin/jpsvis /usr/bin
 RUN cp /home/jupedsim/workspace/JuPedSim/bin/jpsreport /usr/bin
 
-USER jupedsim
 
 # RUN usermod -p `perl -e "print crypt("qw","Q4")"` root
 # install python variant filtering dependencies
 RUN pip3 install numpy
 RUN pip3 install matplotlib
 RUN pip3 install Polygon3
+
+USER jupedsim
 
 # by default /bin/bash is executed
 CMD /bin/bash && echo "Thank you for using JuPedSim!"
