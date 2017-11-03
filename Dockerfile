@@ -75,7 +75,7 @@ USER jupedsim
 # install python variant filtering dependencies
 RUN pip3 install numpy
 RUN pip3 install matplotlib
-RUN pip3 install Polygon
+RUN pip3 install Polygon3
 
 # by default /bin/bash is executed
 CMD /bin/bash && echo "Thank you for using JuPedSim!"
