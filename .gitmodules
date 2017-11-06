@@ -1,3 +1,6 @@
 [submodule "jpscore"]
 	path = jpscore
 	url = https://gitlab.version.fz-juelich.de/jupedsim/jpscore.git
+[submodule "jpsvis"]
+	path = jpsvis
+	url = https://gitlab.version.fz-juelich.de/jupedsim/jpsvis.git
