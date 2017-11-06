@@ -4,3 +4,6 @@
 [submodule "jpsvis"]
 	path = jpsvis
 	url = https://gitlab.version.fz-juelich.de/jupedsim/jpsvis.git
+[submodule "jpseditor"]
+	path = jpseditor
+	url = https://gitlab.version.fz-juelich.de/jupedsim/jpseditor.git
