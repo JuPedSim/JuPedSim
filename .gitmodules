@@ -4,9 +4,6 @@
 [submodule "jpscore"]
 	path = jpscore
 	url = https://github.com/JuPedSim/jpscore.git
-[submodule "jpsreport"]
-	path = jpsreport
-	url = https://github.com/JuPedSim/jpsreport.git
 [submodule "jpsvis"]
 	path = jpsvis
 	url = https://github.com/JuPedSim/jpsvis.git
