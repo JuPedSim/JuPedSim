@@ -59,8 +59,12 @@ RUN cd /home/jupedsim \
     && git clone --depth=1 https://github.com/JuPedSim/JuPedSim.git \
     && cd JuPedSim \
     && git submodule update --init --recursive \
-    && make -f Makefile.cmake
+    && make -f Makefile.cmake check \
+    && make -f Makefile.cmake release
     
+
+
+        
 # cp binaries to /usr/bin
 USER root
 
