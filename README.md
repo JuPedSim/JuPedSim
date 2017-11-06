@@ -4,7 +4,7 @@
 ***
 ![logo](https://github.com/JuPedSim/JuPedSim/blob/master/doc/logo/jupedsim_small.png?raw=true)
 
-[**documentation**](http://www.jupedsim.org) | [**jpscore**](http://jupedsim.github.io/jpscore) | [**jpsreport**](http://jupedsim.github.io/jpsreport) | [**jpseditor**](https://cst.version.fz-juelich.de/jupedsim/jpseditor) | [**jpsvis**](https://cst.version.fz-juelich.de/jupedsim/jpsvis) | [**docker images**](https://hub.docker.com/u/jupedsim/) | [**contribute**](http://jupedsim.github.io/jpscore/contributing/)
+[**documentation**](http://www.jupedsim.org) | [**jpscore**](http://jupedsim.org/jpscore) | [**jpsreport**](http://jupedsim.org/jpsreport) | [**jpseditor**](https://gitlab.version.fz-juelich.de/jupedsim/jpseditor) | [**jpsvis**](https://gitlab.version.fz-juelich.de/jupedsim/jpsvis) | [**docker images**](https://hub.docker.com/u/jupedsim/) | [**contribute**](http://www.jupedsim.org/jpscore/2016-11-04-contributing.html)
 ***
 
 ## Introduction
@@ -26,10 +26,11 @@ model. It implements a couple of measurement methods including the [Voronoi-meth
 - [Boost library](http://www.boost.org/)
 - For `jpseditor` [Qt](https://www.qt.io/)
 - For `jpsvis` [VTK](http://www.vtk.org/)
+- For `jpsreport` [Polygon3](https://bitbucket.org/jraedler/polygon3/downloads/) 
 
 ***
 Note:
-`jpseditor` and `jpsvis` come with Windows executables and  `dmg`-files for Mac users. 
+`jpseditor` and `jpsvis` come with Windows executables.
 Therefore, a compilation of these two packages may not be needed.
 
 ## Quick Install
