@@ -1,0 +1,3 @@
+[submodule "jpscore"]
+	path = jpscore
+	url = https://gitlab.version.fz-juelich.de/jupedsim/jpscore.git
