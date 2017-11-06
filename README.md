@@ -83,7 +83,7 @@ Downgrading to 2.7.8 solves the problem.
 
  Note: You can get you IP by typing in the terminal `ifconfig`.
 
-![docker](doc/docker_jpsvis.png)
+![docker](doc/logo/docker_jpsvis.png)
 
 
 ### Windows
