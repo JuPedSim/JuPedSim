@@ -7,3 +7,6 @@
 [submodule "jpseditor"]
 	path = jpseditor
 	url = https://gitlab.version.fz-juelich.de/jupedsim/jpseditor.git
+[submodule "jpsreport"]
+	path = jpsreport
+	url = https://gitlab.version.fz-juelich.de/jupedsim/jpsreport.git
