@@ -2,7 +2,7 @@
 
 [![DOI](https://zenodo.org/badge/13744388.svg)](https://zenodo.org/badge/latestdoi/13744388) [![LGPL](https://img.shields.io/badge/license-GPL-blue.svg)](https://raw.githubusercontent.com/JuPedSim/jpscore/master/LICENSE) [![twitter](http://i.imgur.com/tXSoThF.png)](http://www.twitter.com/JuPedSim)
 ***
-![logo](https://github.com/JuPedSim/JuPedSim/blob/master/doc/jupedsim_small.png?raw=true)
+![logo](https://github.com/JuPedSim/JuPedSim/blob/master/doc/logo/jupedsim_small.png?raw=true)
 
 [**documentation**](http://www.jupedsim.org) | [**jpscore**](http://jupedsim.github.io/jpscore) | [**jpsreport**](http://jupedsim.github.io/jpsreport) | [**jpseditor**](https://cst.version.fz-juelich.de/jupedsim/jpseditor) | [**jpsvis**](https://cst.version.fz-juelich.de/jupedsim/jpsvis) | [**docker images**](https://hub.docker.com/u/jupedsim/) | [**contribute**](http://jupedsim.github.io/jpscore/contributing/)
 ***
